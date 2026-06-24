@@ -1112,39 +1112,49 @@
                 return String(num).padStart(3, '0');
             },
 
-            openPage(pageNum) {
+           openPage(pageNum) {
                 if (pageNum < 1 || pageNum > 604) return;
                 
                 this.currentPage = parseInt(pageNum);
-                
-                // الانتقال لشاشة المصحف المخصصة
                 App.switchView('quran-page', 'quran');
-                
-                // تغيير عنوان الهيدر
                 document.getElementById('header-title').textContent = 'قراءة القرآن';
-                
-                // تحديث رقم الصفحة في الشريط
                 document.getElementById('current-quran-page-num').textContent = `صفحة ${App.numeralType === 'arabic' ? this.currentPage : formatNumber(this.currentPage)}`;
                 
                 const imgEl = document.getElementById('quran-page-img');
                 const loadingEl = document.getElementById('quran-loading');
                 
-                // إظهار التحميل وإخفاء الصورة مؤقتاً
+                // إعادة ضبط شاشة التحميل
                 imgEl.style.display = 'none';
                 loadingEl.style.display = 'block';
+                loadingEl.textContent = 'جاري تحميل الصفحة...';
+                loadingEl.style.color = 'var(--text-muted)';
                 
-                // استخدام رابط الصور المباشر والسريع جداً من GitHub عبر jsdelivr
                 const pageStr = this.padPageNumber(this.currentPage);
-                imgEl.src = `https://cdn.jsdelivr.net/gh/quran/quran.com-images@master/width_1024/page${pageStr}.png`;
                 
-                // عند انتهاء تحميل الصورة
+                // الرابط الأساسي (تم حذف @master ليتعرف على الفرع التلقائي)
+                const primaryUrl = `https://cdn.jsdelivr.net/gh/quran/quran.com-images/width_1024/page${pageStr}.png`;
+                // رابط بديل مباشر من جيتهاب في حال تعطل الأول
+                const fallbackUrl = `https://raw.githubusercontent.com/quran/quran.com-images/main/width_1024/page${pageStr}.png`;
+
+                imgEl.src = primaryUrl;
+                
+                // عند نجاح التحميل
                 imgEl.onload = () => {
                     loadingEl.style.display = 'none';
                     imgEl.style.display = 'block';
                     document.getElementById('quran-image-container').scrollTop = 0;
                 };
 
-                // حفظ آخر صفحة تم فتحها كعلامة مرجعية تلقائية
+                // عند فشل التحميل (منع التحميل اللانهائي)
+                imgEl.onerror = () => {
+                    if (imgEl.src === primaryUrl) {
+                        imgEl.src = fallbackUrl; // المحاولة بالرابط البديل
+                    } else {
+                        loadingEl.textContent = 'حدث خطأ في تحميل الصفحة. يرجى التأكد من الاتصال بالإنترنت.';
+                        loadingEl.style.color = '#f44336'; // لون أحمر للتنبيه
+                    }
+                };
+
                 localStorage.setItem('khatmah_last_page', this.currentPage);
             },
 
