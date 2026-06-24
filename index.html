@@ -599,7 +599,7 @@
                             DATA.adhkar.evening.push(dhikrObj);
                         } else if (cat.includes("النوم") && !cat.includes("الاستيقاظ")) {
                             DATA.adhkar.sleep.push(dhikrObj);
-                        } else if (cat.includes("الصلاة") || cat.includes("الصلوات")) {
+                        } else if (this.isPrayerCategory(cat)) {
                             DATA.adhkar.prayer_adhkar.push(dhikrObj);
                         } else {
                             // أي تصنيف آخر موجود في الملف يُجمع تلقائياً تحت "أذكار متنوعة" بقسم خاص باسمه الحقيقي
@@ -618,6 +618,12 @@
             },
 
             // ينسّق مرجع الذكر: يحذف "المرجع" ويكتب "رواه" إن كان حديثاً، ولا يكتب شيئاً إن كان آية أو سورة
+            // يحدد إذا كان التصنيف من أذكار/أدعية الصلاة (داخل الصلاة، الأذان، الوتر...)
+            isPrayerCategory(cat) {
+                const keywords = ['صلاة', 'سجود', 'ركوع', 'تشهد', 'استفتاح', 'قنوت', 'آذان', 'اذان', 'وتر'];
+                return keywords.some(k => cat.includes(k));
+            },
+
             formatReference(ref) {
                 if (!ref) return '';
                 const r = String(ref).trim();
