@@ -24,7 +24,7 @@
             --chart-bar: #66bb6a; --chart-bg: #333333;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--background); color: var(--text-main); display: flex; flex-direction: column; height: 100vh; overflow: hidden; transition: background-color 0.3s, color 0.3s; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--background); color: var(--text-main); display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; transition: background-color 0.3s, color 0.3s; }
         
         header { background-color: var(--primary); color: white; height: var(--header-height); padding: 0 16px; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: 700; z-index: 100; transition: background-color 0.3s; }
         .header-btn { background: none; border: none; color: white; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
@@ -253,7 +253,7 @@
     <main id="app-content">
         <section id="view-home" class="view active">
             <div class="home-container">
-                <div class="quran-summary-card" onclick="App.switchView('quran', 'quran')">
+                <div class="quran-summary-card hidden-el" onclick="App.switchView('quran', 'quran')">
                     <div class="qsc-info">
                         <span class="qsc-title">ورد القرآن الكريم</span>
                         <span class="qsc-details" id="home-wird-status">لم تبدأ بعد</span>
@@ -293,55 +293,64 @@
         </section>
 
         <section id="view-quran" class="view">
-            <div class="quran-sub-nav">
-                <div class="qt-tab active" data-qtab="index">الفهرس</div>
-                <div class="qt-tab" data-qtab="wird">الورد اليومي</div>
-                <div class="qt-tab" data-qtab="marks">العلامات</div>
+            <div id="quran-coming-soon" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:14px; padding:24px; text-align:center;">
+                <svg viewBox="0 0 24 24" style="width:60px; height:60px; fill:var(--primary); opacity:0.8;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
+                <div style="font-size:1.3rem; font-weight:800; color:var(--text-main);">قريباً</div>
+                <div style="color:var(--text-muted); font-size:1rem;">قسم القرآن الكريم قيد التجهيز وسيتم تفعيله قريباً بإذن الله.</div>
             </div>
 
-            <div class="quran-tab-content active" id="quran-tab-index">
-                <ul class="quran-index-list" id="surah-list"></ul>
-            </div>
-
-            <div class="quran-tab-content" id="quran-tab-wird">
-                <div id="wird-setup" class="wird-setup-card">
-                    <div class="w-title">إعداد ختمة جديدة</div>
-                    <p style="color:var(--text-muted); margin-bottom:15px;">أدخل عدد الأيام المطلوبة لختم القرآن (الحد الأقصى 30 يوم)</p>
-                    <input type="number" id="wird-days-input" class="form-input" placeholder="عدد الأيام..." min="1" max="30" style="text-align:center; font-weight:bold; font-size:1.2rem; margin-bottom:15px;">
-                    <button class="btn-search" onclick="QuranApp.setupWird()">حفظ والبدء</button>
+            <div id="quran-real-content" class="hidden-el" style="display:flex; flex-direction:column; height:100%;">
+                <div class="quran-sub-nav">
+                    <div class="qt-tab active" data-qtab="index">الفهرس</div>
+                    <div class="qt-tab" data-qtab="wird">الورد اليومي</div>
+                    <div class="qt-tab" data-qtab="marks">العلامات</div>
                 </div>
 
-                <div id="wird-active" class="wird-active-card hidden-el">
-                    <div class="w-title" id="wird-progress-title">الورد الحالي: 1 من 30</div>
-                    <div class="w-ayah-box">
-                        <strong>البداية:</strong> <span id="wird-start-text">-</span><br><br>
-                        <strong>النهاية:</strong> <span id="wird-end-text">-</span>
+                <div class="quran-tab-content active" id="quran-tab-index">
+                    <ul class="quran-index-list" id="surah-list"></ul>
+                </div>
+
+                <div class="quran-tab-content" id="quran-tab-wird">
+                    <div id="wird-setup" class="wird-setup-card">
+                        <div class="w-title">إعداد ختمة جديدة</div>
+                        <p style="color:var(--text-muted); margin-bottom:15px;">أدخل عدد الأيام المطلوبة لختم القرآن (الحد الأقصى 30 يوم)</p>
+                        <input type="number" id="wird-days-input" class="form-input" placeholder="عدد الأيام..." min="1" max="30" style="text-align:center; font-weight:bold; font-size:1.2rem; margin-bottom:15px;">
+                        <button class="btn-search" onclick="QuranApp.setupWird()">حفظ والبدء</button>
                     </div>
-                    <div class="w-actions">
-                        <button class="btn-wird-read" onclick="QuranApp.openReader()">اقرأ الورد</button>
-                        <button class="btn-wird-done" onclick="QuranApp.markWirdDone()">أتممت القراءة</button>
+
+                    <div id="wird-active" class="wird-active-card hidden-el">
+                        <div class="w-title" id="wird-progress-title">الورد الحالي: 1 من 30</div>
+                        <div class="w-ayah-box">
+                            <strong>البداية:</strong> <span id="wird-start-text">-</span><br><br>
+                            <strong>النهاية:</strong> <span id="wird-end-text">-</span>
+                        </div>
+                        <div class="w-actions">
+                            <button class="btn-wird-read" onclick="QuranApp.openReader()">اقرأ الورد</button>
+                            <button class="btn-wird-done" onclick="QuranApp.markWirdDone()">أتممت القراءة</button>
+                        </div>
+                        <div class="w-progress-container">
+                            <span class="w-prog-text" id="wird-rem-text">متبقي: 0</span>
+                            <div class="w-prog-bar"><div class="w-prog-fill" id="wird-fill-bar"></div></div>
+                            <span class="w-prog-text" id="wird-done-text">منتهي: 0</span>
+                        </div>
                     </div>
-                    <div class="w-progress-container">
-                        <span class="w-prog-text" id="wird-rem-text">متبقي: 0</span>
-                        <div class="w-prog-bar"><div class="w-prog-fill" id="wird-fill-bar"></div></div>
-                        <span class="w-prog-text" id="wird-done-text">منتهي: 0</span>
+
+                    <div id="wird-finished" class="wird-active-card hidden-el">
+                        <div class="w-title" style="color:var(--primary); font-size:1.5rem;">تقبل الله طاعتكم! 🎉</div>
+                        <p style="color:var(--text-muted); margin: 15px 0;">لقد أتممت ختم القرآن الكريم بفضل الله.</p>
+                        <div class="w-actions" style="flex-direction:column;">
+                            <button class="btn-wird-read" onclick="alert('اللهم ارحمني بالقرآن واجعله لي إماماً ونوراً وهدى ورحمة...')">دعاء ختم القرآن</button>
+                            <button class="btn-wird-done" onclick="QuranApp.resetWird()">بدء ختمة جديدة</button>
+                        </div>
                     </div>
                 </div>
 
-                <div id="wird-finished" class="wird-active-card hidden-el">
-                    <div class="w-title" style="color:var(--primary); font-size:1.5rem;">تقبل الله طاعتكم! 🎉</div>
-                    <p style="color:var(--text-muted); margin: 15px 0;">لقد أتممت ختم القرآن الكريم بفضل الله.</p>
-                    <div class="w-actions" style="flex-direction:column;">
-                        <button class="btn-wird-read" onclick="alert('اللهم ارحمني بالقرآن واجعله لي إماماً ونوراً وهدى ورحمة...')">دعاء ختم القرآن</button>
-                        <button class="btn-wird-done" onclick="QuranApp.resetWird()">بدء ختمة جديدة</button>
-                    </div>
+                <div class="quran-tab-content" id="quran-tab-marks">
+                    <div style="text-align:center; color:var(--text-muted); padding: 40px 0;">قريباً.. سيتم حفظ علامات الوقوف هنا للعودة إليها.</div>
                 </div>
-            </div>
-
-            <div class="quran-tab-content" id="quran-tab-marks">
-                <div style="text-align:center; color:var(--text-muted); padding: 40px 0;">قريباً.. سيتم حفظ علامات الوقوف هنا للعودة إليها.</div>
             </div>
         </section>
+
 
         <section id="view-quran-page" class="view">
             <div style="display: flex; justify-content: space-between; padding: 10px 15px; background: var(--surface); border-bottom: 1px solid var(--border);">
@@ -473,6 +482,12 @@
                 <div class="setting-item" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('privacy')"><div class="setting-row"><span>سياسة الخصوصية</span><span style="color:var(--text-muted); font-size:1.2rem;">‹</span></div></div>
             </div>
         </section>
+
+        <section id="view-misc" class="view">
+            <div class="home-container">
+                <div class="grid-10" id="misc-categories-grid"></div>
+            </div>
+        </section>
     </main>
 
     <div class="modal-overlay" id="policy-modal">
@@ -509,13 +524,13 @@
         const DATA = {
             categories: [
                 { id: 'morning', title: 'أذكار الصباح', class: 'cat-full bg-morning', icon: '<path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm0-12a1 1 0 011 1v2a1 1 0 11-2 0V4a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm8-9a1 1 0 010 2h-2a1 1 0 110-2h2zM6 12a1 1 0 01-1 1H3a1 1 0 110-2h2a1 1 0 011 1zm11.657-6.071a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zM7.757 16.243a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zm11.314 4.95a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414zM6.343 7.757a1 1 0 01-1.414 0L3.515 6.343a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414z"/>' },
-                { id: 'evening', title: 'أذكار المساء', class: 'cat-full bg-evening', icon: '<path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm0-12a1 1 0 011 1v2a1 1 0 11-2 0V4a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm8-9a1 1 0 010 2h-2a1 1 0 110-2h2zM6 12a1 1 0 01-1 1H3a1 1 0 110-2h2a1 1 0 011 1zm11.657-6.071a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zM7.757 16.243a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zm11.314 4.95a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414zM6.343 7.757a1 1 0 01-1.414 0L3.515 6.343a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414z"/>' },
+                { id: 'evening', title: 'أذكار المساء', class: 'cat-full bg-evening', icon: '<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>' },
                 { id: 'sleep', title: 'أذكار النوم', class: 'bg-sleep', icon: '<path d="M2 3.99L3.99 2 22 20.01 20.01 22 2 3.99zM11.66 16c1.68 2.28 4.7 3.09 7.4 1.94.38-.16.74-.36 1.08-.58l-5.69-5.69c-.61 2.5-2.79 4.33-5.26 4.33H8.38l3.28 3.28v-3.28zm8.79-11c-.34-.23-.7-.44-1.07-.6A6.98 6.98 0 0 0 12 3v1h-1V2h-1v2H9V2H8v2H7V2H6v3.28l12.45 12.45c.46-1.46.38-3.11-.4-4.5-1.57-2.8-4.91-4-8.05-3.23l7.98 7.98z"/>' },
-                { id: 'wake', title: 'الاستيقاظ', class: 'bg-wake', icon: '<path d="M12 4V2M12 22v-2M4 12H2M22 12h-2M5.636 5.636L4.222 4.222M19.778 19.778l-1.414-1.414M5.636 18.364l-1.414 1.414M19.778 4.222l-1.414 1.414M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>' },
-                { id: 'masjid', title: 'أذكار المسجد', class: 'bg-masjid', icon: '<path d="M12 2l-5 4v2h10V6l-5-4zm0 2.5l3 2.4V8H9V6.9l3-2.4zM4 10v10H2v2h20v-2h-2V10H4zm14 10H6v-8h12v8z"/>' },
-                { id: 'travel', title: 'أدعية مأثورة ومتنوعة', class: 'bg-travel', icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>' }
+                { id: 'prayer_adhkar', title: 'أذكار الصلاة', class: 'bg-masjid', icon: '<path d="M12 2l-5 4v2h10V6l-5-4zm0 2.5l3 2.4V8H9V6.9l3-2.4zM4 10v10H2v2h20v-2h-2V10H4zm14 10H6v-8h12v8z"/>' },
+                { id: 'misc', title: 'أذكار متنوعة', class: 'cat-full bg-travel', icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>' }
             ],
-            adhkar: { morning: [], evening: [], sleep: [], wake: [], masjid: [], travel: [], quran: [] }
+            adhkar: { morning: [], evening: [], sleep: [], prayer_adhkar: [] },
+            miscCategories: []
         };
 
         const State = { activeView: 'home', currentCategoryId: null, currentList: [], currentIndex: 0, currentCount: 0, trackingOffset: 0 };
@@ -561,41 +576,55 @@
                     const data = await response.json();
                     
                     // تفريغ المصفوفات
-                    DATA.adhkar = { morning: [], evening: [], sleep: [], wake: [], masjid: [], travel: [], quran: [] };
+                    DATA.adhkar = { morning: [], evening: [], sleep: [], prayer_adhkar: [] };
+                    DATA.miscCategories = [];
+                    const miscIndexByTitle = {};
                     
                     data.forEach(item => {
-                        let cat = item.category || "";
+                        let cat = (item.category || "").trim();
                         let parsedCount = parseInt(item.count);
                         if (isNaN(parsedCount) || parsedCount < 1) parsedCount = 1;
                         
                         let rewardText = item.description || '';
-                        if (item.reference) {
-                            rewardText += (rewardText ? ` - المرجع: ${item.reference}` : `المرجع: ${item.reference}`);
+                        const refFormatted = this.formatReference(item.reference);
+                        if (refFormatted) {
+                            rewardText += (rewardText ? ` - ${refFormatted}` : refFormatted);
                         }
 
                         let dhikrObj = { text: item.zekr, reward: rewardText, count: parsedCount };
 
-                        if (cat === "أذكار الصباح") {
+                        if (cat.includes("الصباح")) {
                             DATA.adhkar.morning.push(dhikrObj);
-                        } else if (cat === "أذكار المساء") {
+                        } else if (cat.includes("المساء")) {
                             DATA.adhkar.evening.push(dhikrObj);
-                        } else if (cat === "أذكار الاستيقاظ من النوم" || cat.includes("الاستيقاظ")) {
-                            DATA.adhkar.wake.push(dhikrObj);
-                        } else if (cat.includes("النوم") || cat.includes("الليل")) {
+                        } else if (cat.includes("النوم") && !cat.includes("الاستيقاظ")) {
                             DATA.adhkar.sleep.push(dhikrObj);
-                        } else if (cat.includes("المسجد") || cat.includes("الآذان") || cat.includes("الوضوء")) {
-                            DATA.adhkar.masjid.push(dhikrObj);
-                        } else if (cat.includes("الرقية") || cat.includes("القرآن")) {
-                            DATA.adhkar.quran.push(dhikrObj);
+                        } else if (cat.includes("الصلاة") || cat.includes("الصلوات")) {
+                            DATA.adhkar.prayer_adhkar.push(dhikrObj);
                         } else {
-                            // باقي الأذكار تذهب للقسم المتنوع (أدعية مأثورة)
-                            DATA.adhkar.travel.push(dhikrObj);
+                            // أي تصنيف آخر موجود في الملف يُجمع تلقائياً تحت "أذكار متنوعة" بقسم خاص باسمه الحقيقي
+                            const key = cat || 'أذكار متنوعة أخرى';
+                            if (!(key in miscIndexByTitle)) {
+                                miscIndexByTitle[key] = DATA.miscCategories.length;
+                                DATA.miscCategories.push({ id: `misc_${DATA.miscCategories.length}`, title: key, items: [] });
+                            }
+                            DATA.miscCategories[miscIndexByTitle[key]].items.push(dhikrObj);
                         }
                     });
                 } catch (e) {
                     console.error("Error loading JSON:", e);
-                    DATA.adhkar.morning.push({ text: "تعذر تحميل الأذكار. يرجى رفع ملف azkar_obj.json", reward: "", count: 1 });
+                    DATA.adhkar.morning.push({ text: "تعذر تحميل الأذكار. يرجى التأكد من رفع ملف azkar_obj.json", reward: "", count: 1 });
                 }
+            },
+
+            // ينسّق مرجع الذكر: يحذف "المرجع" ويكتب "رواه" إن كان حديثاً، ولا يكتب شيئاً إن كان آية أو سورة
+            formatReference(ref) {
+                if (!ref) return '';
+                const r = String(ref).trim();
+                if (!r) return '';
+                if (/سورة|آية|الآية/.test(r)) return '';
+                if (/^رواه/.test(r)) return r;
+                return `رواه: ${r}`;
             },
 
             bindEvents() {
@@ -689,10 +718,25 @@
 
             renderHomeGrid() {
                 document.getElementById('categories-grid').innerHTML = DATA.categories.map(cat => `
-                    <div class="cat-card ${cat.class}" onclick="App.startReading('${cat.id}')">
+                    <div class="cat-card ${cat.class}" onclick="${cat.id === 'misc' ? 'App.openMiscView()' : `App.startReading('${cat.id}')`}">
                         <svg viewBox="0 0 24 24">${cat.icon}</svg><span>${cat.title}</span>
                     </div>
                 `).join('');
+            },
+
+            openMiscView() {
+                const grid = document.getElementById('misc-categories-grid');
+                if (DATA.miscCategories.length === 0) {
+                    grid.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:40px 0;">لا توجد أقسام أخرى حالياً</div>';
+                } else {
+                    grid.innerHTML = DATA.miscCategories.map(mc => `
+                        <div class="cat-card bg-travel" style="grid-column: span 2;" onclick="App.startReading('${mc.id}')">
+                            <span>${mc.title}</span>
+                            <span style="font-size:0.85rem; opacity:0.85; font-weight:500;">(${formatNumber(mc.items.length)})</span>
+                        </div>
+                    `).join('');
+                }
+                this.switchView('misc');
             },
 
             getDateOffsetStr(offset) {
@@ -910,15 +954,15 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                // إخفاء الشريط السفلي في شاشات القراءة ليأخذ المحتوى الشاشة كاملة
-                if (['reader', 'completion', 'quran-page'].includes(viewId)) {
+                // إخفاء الشريط السفلي فقط في شاشة قراءة صفحات القرآن (تأخذ الشاشة كاملة)، ويبقى ظاهراً في صفحات الأذكار
+                if (['quran-page'].includes(viewId)) {
                     DOM.mainNav.classList.add('hidden-el'); DOM.appContent.classList.add('no-nav');
                 } else {
                     DOM.mainNav.classList.remove('hidden-el'); DOM.appContent.classList.remove('no-nav');
-                    DOM.topProgressBar.classList.add('hidden-el'); 
+                    if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
 
-                const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'السنن والواجبات', settings: 'الإعدادات' };
+                const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'السنن والواجبات', settings: 'الإعدادات', misc: 'أذكار متنوعة' };
                 if (viewId !== 'quran-page') {
                     DOM.headerTitle.textContent = titles[viewId] || 'الأذكار';
                 }
@@ -931,9 +975,19 @@
             },
 
             startReading(categoryId) {
-                const categoryData = DATA.categories.find(c => c.id === categoryId);
+                let list, title;
+                if (categoryId.startsWith('misc_')) {
+                    const mc = DATA.miscCategories.find(m => m.id === categoryId);
+                    list = mc ? mc.items : [];
+                    title = mc ? mc.title : 'أذكار متنوعة';
+                } else {
+                    const categoryData = DATA.categories.find(c => c.id === categoryId);
+                    list = DATA.adhkar[categoryId] || [];
+                    title = categoryData ? categoryData.title : 'الأذكار';
+                }
+
                 State.currentCategoryId = categoryId;
-                State.currentList = DATA.adhkar[categoryId] || [];
+                State.currentList = list;
                 
                 if (State.currentList.length === 0) {
                     alert('لا توجد أذكار في هذا القسم حالياً، يرجى التأكد من رفع ملف azkar_obj.json');
@@ -942,10 +996,10 @@
 
                 State.currentIndex = 0;
                 
-                DOM.headerTitle.textContent = categoryData ? categoryData.title : 'الأذكار';
+                this.switchView('reader', categoryId);
+                DOM.headerTitle.textContent = title;
                 DOM.btnBack.classList.remove('hidden-el');
                 
-                this.switchView('reader', categoryId);
                 this.renderCurrentDhikr();
             },
 
