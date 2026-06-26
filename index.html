@@ -119,19 +119,25 @@
         .progress-bar-container { flex: 1; height: 8px; background: var(--progress-bg); border-radius: 6px; position: relative; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--progress-fill); width: 0%; transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: absolute; right: 0; border-radius: 6px;}
 
-        /* زيادة البادنج السفلي لحل مشكلة إخفاء الأزرار السفلية خلف الشريط */
-        main { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; padding-bottom: 140px; transition: padding 0.3s; }
+        /* إزالة البادنج الثابت من الحاوية الرئيسية لحل مشكلة فجوة صفحة القراءة */
+        main { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; transition: padding 0.3s; }
         main.no-nav { padding-bottom: 0 !important; }
         .view { display: none; height: 100%; animation: slideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
         .view.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .home-container { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+        /* إضافة بادنج سفلي مخصص للحاويات القابلة للتمرير فقط، لكي تتخطى الشريط السفلي العائم */
+        .home-container { padding: 20px; padding-bottom: 130px; display: flex; flex-direction: column; gap: 16px; }
+        .prayer-container { padding: 20px; padding-bottom: 130px; }
+        .sunan-list { padding: 20px; padding-bottom: 130px; touch-action: pan-y; }
+        .ds-container { padding: 20px; padding-bottom: 130px; }
+        .tips-container { padding: 20px; padding-bottom: 130px; }
+        .settings-container { padding: 24px; padding-bottom: 130px; }
         
-        /* Updated Cards to Glass */
+        /* Updated Cards to Glass with Reduced Height */
         .quran-summary-card, .next-prayer-card, .home-stats-card {
             cursor: pointer; position: relative; overflow: hidden; transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            padding: 24px;
+            padding: 16px 20px; /* تم تقليل البادنج لتقليل الارتفاع */
         }
         .quran-summary-card:active, .next-prayer-card:active, .home-stats-card:active { transform: scale(0.96); }
         
@@ -139,22 +145,22 @@
         .next-prayer-card { border-left: 6px solid #34c759; }
         .home-stats-card { border-left: 6px solid var(--primary); }
 
-        .qsc-info, .npc-info { display: flex; flex-direction: column; gap: 6px; }
+        .qsc-info, .npc-info { display: flex; flex-direction: column; gap: 4px; }
         .qsc-title, .npc-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
-        .qsc-details, .npc-name { font-size: 1.6rem; font-weight: 800; color: var(--text-main); }
-        .npc-name { display: flex; align-items: baseline; gap: 8px; }
-        .npc-time { font-size: 1.2rem; font-weight: 600; color: var(--primary); }
-        .npc-timer { font-size: 2.2rem; font-weight: 800; direction: ltr; text-align: right; letter-spacing: 2px; color: var(--text-main); }
+        .qsc-details { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
+        .npc-name { font-size: 1.4rem; font-weight: 800; color: var(--text-main); display: flex; align-items: baseline; gap: 8px; }
+        .npc-time { font-size: 1rem; font-weight: 600; color: var(--primary); }
+        .npc-timer { font-size: 1.8rem; font-weight: 800; direction: ltr; text-align: right; letter-spacing: 2px; color: var(--text-main); }
         
-        .hsc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .hsc-title { font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
-        .hsc-badge { background: rgba(0, 122, 255, 0.15); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 800; }
+        .hsc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .hsc-title { font-weight: 800; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+        .hsc-badge { background: rgba(0, 122, 255, 0.15); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; }
         .hsc-body { display: flex; justify-content: space-between; align-items: flex-end; }
-        .hsc-metrics { display: flex; gap: 24px; }
+        .hsc-metrics { display: flex; gap: 20px; }
         .hsc-metric { display: flex; flex-direction: column; }
-        .hsc-m-val { font-size: 2rem; font-weight: 800; direction: ltr; text-align: right; color: var(--text-main); }
-        .hsc-m-lbl { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); }
-        .hsc-mini-chart { display: flex; gap: 6px; align-items: flex-end; height: 45px; }
+        .hsc-m-val { font-size: 1.6rem; font-weight: 800; direction: ltr; text-align: right; color: var(--text-main); }
+        .hsc-m-lbl { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+        .hsc-mini-chart { display: flex; gap: 4px; align-items: flex-end; height: 35px; }
         .hsc-bar { width: 6px; background: rgba(150,150,150,0.3); border-radius: 6px; }
         .hsc-bar.active { background: var(--primary); }
 
@@ -179,7 +185,6 @@
 
         body[data-theme="dark"] .bg-morning, body[data-theme="dark"] .bg-evening, body[data-theme="dark"] .bg-sleep, body[data-theme="dark"] .bg-wake, body[data-theme="dark"] .bg-masjid, body[data-theme="dark"] .bg-travel, body[data-theme="dark"] .bg-quran { background: rgba(255,255,255,0.05); }
 
-        .prayer-container { padding: 20px; }
         .location-form { padding: 20px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
         .form-row { display: flex; gap: 12px; }
         .form-select, .form-input { 
@@ -236,7 +241,7 @@
         #view-quran-page { display: none; flex-direction: column; background: var(--bg-gradient); }
         #view-quran-page.active { display: flex; }
 
-        /* Sunan Styles */
+        /* Sunan Styles (العبادات) */
         #view-sunan { display: none; flex-direction: column; height: 100%; }
         #view-sunan.active { display: flex; }
         .sunan-sub-nav { display: flex; background: var(--glass-bg); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 20; }
@@ -256,7 +261,6 @@
         .stat-title { font-size: 1rem; color: var(--text-muted); font-weight: 800; }
         .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--primary); direction: ltr; }
         
-        .sunan-list { padding: 20px; padding-bottom: 60px; touch-action: pan-y; }
         .sunnah-item { padding: 20px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 1.2rem; transition: opacity 0.3s; }
         .sunnah-item.locked { opacity: 0.5; }
         .sunnah-title { display: flex; align-items: center; gap: 8px; }
@@ -270,7 +274,6 @@
         .s-btn.btn-done.active { background: rgba(52, 199, 89, 0.2); border-color: #34c759; }
         .s-btn.btn-missed.active { background: rgba(255, 59, 48, 0.2); border-color: #ff3b30; }
 
-        .ds-container { padding: 20px; }
         .ds-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .ds-share-btn { background: rgba(0, 122, 255, 0.15); color: var(--primary); border: 1px solid rgba(0, 122, 255, 0.3); padding: 10px 18px; border-radius: 12px; font-family: inherit; font-weight: 800; cursor: pointer; display: flex; gap: 8px; align-items: center; backdrop-filter: blur(5px);}
         .ds-card { padding: 24px; margin-bottom: 20px; }
@@ -287,7 +290,6 @@
         .ds-mc-val { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 6px; direction: ltr; }
         .ds-mc-lbl { font-size: 0.95rem; color: var(--text-muted); font-weight: 800; }
 
-        .tips-container { padding: 20px; }
         .tip-card { padding: 24px; margin-bottom: 20px; border-right: 5px solid var(--primary); }
         .tip-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; color: var(--primary); }
         .tip-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-main); text-align: justify; font-weight: 600;}
@@ -312,7 +314,6 @@
         .btn-read { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: 18px; font-size: 1.3rem; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3); transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .btn-read:active { transform: scale(0.95); background: var(--primary-dark); }
 
-        .settings-container { padding: 24px; }
         .setting-item { padding: 20px; margin-bottom: 16px; display: flex; flex-direction: column; font-weight: 700; font-size: 1.1rem;}
         .setting-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .setting-controls { display: flex; gap: 12px; align-items: center; }
@@ -411,7 +412,6 @@
                 </div>
 
                 <div class="grid-10" id="categories-grid"></div>
-                <div style="height: 10px; flex-shrink: 0;"></div>
             </div>
         </section>
 
@@ -802,7 +802,8 @@
 
             bindSwipeAndPinch() {
                 let startX = 0, initialPinchDist = null, initialFont = null;
-                const areas = [DOM.readerContentArea, document.getElementById('sunan-tab-tracking')];
+                // تم إزالة مستمع السحب من قسم العبادات بناءً على طلبك
+                const areas = [DOM.readerContentArea];
 
                 areas.forEach(area => {
                     if (!area) return;
@@ -830,14 +831,9 @@
                             let diff = startX - e.changedTouches[0].screenX;
                             if (Math.abs(diff) > 50) {
                                 if (area === DOM.readerContentArea) {
-                                    // عكس منطق السحب حسب الطلب (يمين=السابق / يسار=التالي)
-                                    if (diff > 0) this.prevDhikr(); else this.nextDhikr();
-                                } 
-                                /* إيقاف السحب في قسم العبادات حسب الطلب
-                                else if (area === document.getElementById('sunan-tab-tracking')) {
-                                    if (diff < 0) this.changeTrackingDate(-1); else this.changeTrackingDate(1);
+                                    // عكس منطق السحب (السحب من اليمين -> السابق، من اليسار -> التالي)
+                                    if (diff > 0) this.nextDhikr(); else this.prevDhikr();
                                 }
-                                */
                             } else if (Math.abs(diff) < 5 && area === DOM.readerContentArea) {
                                 this.processTap();
                             }
@@ -1095,14 +1091,16 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                if (['quran-page'].includes(viewId)) {
-                    DOM.mainNav.classList.add('hidden-el'); DOM.appContent.classList.add('no-nav');
+                // إخفاء الشريط السفلي بالكامل أثناء عرض شاشة الذكر أو القراءة لحل مشكلة الفجوة والتداخل
+                if (['quran-page', 'reader', 'completion'].includes(viewId)) {
+                    DOM.mainNav.classList.add('hidden-el'); 
+                    DOM.appContent.classList.add('no-nav');
                 } else {
-                    DOM.mainNav.classList.remove('hidden-el'); DOM.appContent.classList.remove('no-nav');
+                    DOM.mainNav.classList.remove('hidden-el'); 
+                    DOM.appContent.classList.remove('no-nav');
                     if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
 
-                // تغيير مسمى السنن إلى العبادات
                 const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'العبادات', settings: 'الإعدادات', misc: 'أذكار متنوعة' };
                 if (viewId !== 'quran-page') {
                     DOM.headerTitle.textContent = titles[viewId] || 'الأذكار';
