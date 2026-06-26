@@ -124,7 +124,6 @@
         .view.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* مساحة سفلية إضافية للحاويات حتى لا يغطي الشريط السفلي على آخر العناصر */
         .home-container { padding: 20px; padding-bottom: 130px; display: flex; flex-direction: column; gap: 16px; }
         .prayer-container { padding: 20px; padding-bottom: 130px; }
         .sunan-list { padding: 20px; padding-bottom: 130px; touch-action: pan-y; }
@@ -146,7 +145,6 @@
         .qsc-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
         .qsc-details { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
         
-        /* تنسيق الصلاة الفائتة والقادمة */
         .npc-title { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); }
         .npc-name { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-top: 4px; }
         .npc-time { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-top: 4px; opacity: 0.9;}
@@ -186,8 +184,9 @@
 
         .location-form { padding: 20px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
         .form-row { display: flex; gap: 12px; }
+        /* تمت إضافة min-width: 0 هنا لحل مشكلة خروج الخانة عن الإطار */
         .form-select, .form-input { 
-            flex: 1; padding: 14px; border: 1px solid var(--glass-border); border-radius: 14px; 
+            flex: 1; min-width: 0; padding: 14px; border: 1px solid var(--glass-border); border-radius: 14px; 
             font-family: inherit; font-size: 1.1rem; font-weight: 600;
             background: rgba(255,255,255,0.2); color: var(--text-main); outline: none; 
             backdrop-filter: blur(10px);
@@ -252,7 +251,6 @@
         .sunan-tab-content { display: none; }
         .sunan-tab-content.active { display: block; animation: slideIn 0.3s forwards; }
 
-        /* حاوية التثبيت الجديدة التي تجمع اليوم مع الإحصائيات معاً لتثبت بالأعلى عند السحب */
         .sticky-tracking-header {
             position: sticky; top: 0; z-index: 30;
             background: var(--glass-bg);
@@ -368,7 +366,6 @@
         }
         .nav-item svg { width: 24px; height: 24px; fill: currentColor; transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
         
-        /* The iOS Pill highlight for active tab */
         .nav-item.active { 
             color: var(--primary); 
             background: rgba(0, 122, 255, 0.15); 
@@ -1163,16 +1160,16 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                // هنا تم إضافة "reader" للصفحات التي يخفى فيها الشريط السفلي بالكامل
+                // إخفاء الشريط السفلي بالكامل أثناء عرض شاشة الذكر أو القراءة لحل مشكلة الفجوة والتداخل
+                // أضفت كلمة 'reader' لضمان اختفائه عند قراءة الأذكار!
                 if (['quran-page', 'reader', 'completion'].includes(viewId)) {
                     DOM.mainNav.classList.add('hidden-el'); 
                     DOM.appContent.classList.add('no-nav');
                 } else {
                     DOM.mainNav.classList.remove('hidden-el'); 
                     DOM.appContent.classList.remove('no-nav');
+                    if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
-                
-                if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
 
                 const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'العبادات', settings: 'الإعدادات', misc: 'أذكار متنوعة' };
                 if (viewId !== 'quran-page') {
@@ -1493,11 +1490,26 @@
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => App.init());
-        
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed'));
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            App.init();
+            
+            // إضافة منطق التحديث التلقائي لتطبيق الـ PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').then((reg) => {
+                    reg.update(); // فحص التحديثات في الخلفية
+                    reg.addEventListener('updatefound', () => {
+                        const newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                if (confirm('يوجد تحديث جديد للتطبيق! هل تريد إعادة التحميل لتطبيق التحديثات؟')) {
+                                    window.location.reload(true);
+                                }
+                            }
+                        });
+                    });
+                }).catch(err => console.log('SW registration failed'));
+            }
+        });
     </script>
 </body>
 </html>
