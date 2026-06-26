@@ -6,7 +6,6 @@
     <title>أذكار وسنن</title>
     <meta name="theme-color" content="#e0c3fc">
     <link rel="manifest" href="manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             /* iOS Liquid Glass Variables - Enhanced Vibrant Colors for Light Mode */
@@ -58,7 +57,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: 'Tajawal', sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
             background: var(--bg-gradient); 
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -1164,15 +1163,16 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                // إخفاء الشريط السفلي بالكامل أثناء عرض شاشة الذكر أو القراءة لحل مشكلة الفجوة والتداخل
+                // هنا تم إضافة "reader" للصفحات التي يخفى فيها الشريط السفلي بالكامل
                 if (['quran-page', 'reader', 'completion'].includes(viewId)) {
                     DOM.mainNav.classList.add('hidden-el'); 
                     DOM.appContent.classList.add('no-nav');
                 } else {
                     DOM.mainNav.classList.remove('hidden-el'); 
                     DOM.appContent.classList.remove('no-nav');
-                    if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
+                
+                if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
 
                 const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'العبادات', settings: 'الإعدادات', misc: 'أذكار متنوعة' };
                 if (viewId !== 'quran-page') {
