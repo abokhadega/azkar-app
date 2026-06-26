@@ -242,7 +242,7 @@
         #view-quran-page { display: none; flex-direction: column; background: var(--bg-gradient); }
         #view-quran-page.active { display: flex; }
 
-        /* Sunan Styles (العبادات) - تم إعادة ضبطه ليصبح التمرير منسجماً مع المتصفح */
+        /* Sunan Styles (العبادات) */
         #view-sunan { display: none; }
         #view-sunan.active { display: block; }
         
@@ -349,20 +349,37 @@
         .check-icon-wrapper svg { width: 55px; height: 55px; fill: #FBC02D; }
         .completion-msg { font-size: 1.5rem; font-weight: 800; color: var(--text-main); line-height: 1.6; }
 
-        /* Floating Glass Bottom Nav */
+        /* Floating Glass Bottom Nav - iOS Interactive Style */
         nav.bottom-nav { 
             position: fixed; bottom: 20px; left: 20px; right: 20px; height: 75px; 
             background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border); border-radius: 35px;
-            display: flex; justify-content: space-around; align-items: center; 
+            display: flex; justify-content: space-evenly; align-items: center; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.15); z-index: 1000; 
             transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            padding: 0 10px;
         }
         nav.bottom-nav.hidden { transform: translateY(150%); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.85rem; gap: 6px; padding: 10px; cursor: pointer; transition: all 0.3s; font-weight: 700; width: 60px;}
-        .nav-item svg { width: 26px; height: 26px; fill: currentColor; transition: transform 0.2s;}
-        .nav-item.active { color: var(--primary); font-weight: 800; }
-        .nav-item.active svg { transform: translateY(-3px); }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-muted); font-size: 0.75rem; gap: 4px; 
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            font-weight: 700; width: 65px; height: 55px;
+            border-radius: 20px;
+        }
+        .nav-item svg { width: 24px; height: 24px; fill: currentColor; transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        
+        /* The iOS Pill highlight for active tab */
+        .nav-item.active { 
+            color: var(--primary); 
+            background: rgba(0, 122, 255, 0.15); 
+            font-weight: 800; 
+            transform: scale(1.05);
+        }
+        body[data-theme="dark"] .nav-item.active {
+            background: rgba(10, 132, 255, 0.2); 
+        }
+        .nav-item.active svg { transform: translateY(-2px); }
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
@@ -405,10 +422,8 @@
                     </div>
                 </div>
 
-                <!-- كارت الصلاة المدمج (الفائتة والقادمة) -->
                 <div class="next-prayer-card glass-panel" id="home-next-prayer" onclick="App.switchView('prayer', 'prayer')">
                     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                        <!-- الصلاة الفائتة (اليمين) -->
                         <div style="display: flex; flex-direction: column; flex: 1; align-items: flex-start;">
                             <span class="npc-title">الصلاة الفائتة</span>
                             <div style="display: flex; align-items: baseline; gap: 6px;">
@@ -418,10 +433,8 @@
                             <div class="npc-timer" id="pp-timer" style="color: var(--text-muted); font-weight: 700;">--:--:--</div>
                         </div>
                         
-                        <!-- فاصل رأسي شفاف -->
                         <div style="width: 1px; height: 50px; background: var(--border); margin: 0 16px;"></div>
                         
-                        <!-- الصلاة القادمة (اليسار) -->
                         <div style="display: flex; flex-direction: column; flex: 1; align-items: flex-end;">
                             <span class="npc-title">الصلاة القادمة</span>
                             <div style="display: flex; align-items: baseline; gap: 6px; flex-direction: row-reverse;">
@@ -545,7 +558,6 @@
         </section>
 
         <section id="view-sunan" class="view">
-            <!-- شريط الأقسام (المتابعة - إحصائيات - نصائح) لم يعد ثابتاً وسيختفي عند التمرير -->
             <div class="sunan-sub-nav">
                 <div class="ss-tab active" data-stab="tracking">المتابعة</div>
                 <div class="ss-tab" data-stab="stats">إحصائيات</div>
@@ -553,31 +565,22 @@
             </div>
 
             <div class="sunan-tab-content active" id="sunan-tab-tracking" style="touch-action: pan-y;">
-                <!-- شريط مثبت للعبادات: يضم (التاريخ + أزرار التنقل) مع الإحصائيات معاً -->
                 <div class="sticky-tracking-header">
                     <div class="date-header">
-                        <!-- زر المشاركة في مربع منفصل على اليسار -->
                         <button class="nav-square-btn share-stat-btn" onclick="App.shareTracking()" title="مشاركة">
                             <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
-                        
-                        <!-- النص بالمنتصف -->
                         <span class="date-text" id="tracking-date-label" style="flex:1; text-align:center;">اليوم</span>
-                        
-                        <!-- زراير السابق والتالي متجاورة وعكسنا منطقها -->
                         <div style="display:flex; gap: 8px; align-items: center;">
-                            <!-- زر اليوم التالي (+) يسار الأيقونات -->
                             <button class="nav-square-btn" onclick="App.changeTrackingDate(1)" title="التالي">
                                 <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
                             </button>
-                            <!-- زر اليوم السابق (-) يمين الأيقونات -->
                             <button class="nav-square-btn" onclick="App.changeTrackingDate(-1)" title="السابق">
                                 <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
                             </button>
                         </div>
                     </div>
 
-                    <!-- إحصائيات الإنجاز والمتوسط (مثبتة مع شريط التاريخ) -->
                     <div class="sunan-sticky-stats">
                         <div class="stat-card glass-panel"><span class="stat-title">الإنجاز</span><span class="stat-value" id="sunan-today-percent">0%</span></div>
                         <div class="stat-card glass-panel"><span class="stat-title">المتوسط</span><span class="stat-value" id="sunan-avg-percent">0%</span></div>
@@ -650,6 +653,11 @@
                     <div class="font-preview"><div class="dhikr-text" style="margin-bottom: 0;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div></div>
                 </div>
                 <div class="setting-item glass-panel" style="flex-direction: row;"><div class="setting-row"><span>شكل الأرقام</span><button class="btn-set outline" id="btn-num-type">123</button></div></div>
+                
+                <div class="setting-item glass-panel" style="flex-direction: row; cursor:pointer;" onclick="App.shareApp()">
+                    <div class="setting-row"><span>مشاركة التطبيق</span><span style="color:var(--primary); font-size:1.4rem;">🔗</span></div>
+                </div>
+                
                 <div class="setting-item glass-panel" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('install')">
                     <div class="setting-row"><span>كيفية تثبيت التطبيق</span><span style="color:var(--primary); font-size:1.4rem;">📱</span></div>
                 </div>
@@ -1156,12 +1164,11 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                if (['quran-page', 'reader', 'completion'].includes(viewId)) {
-                    DOM.mainNav.classList.add('hidden-el'); 
-                    DOM.appContent.classList.add('no-nav');
+                // إخفاء الشريط السفلي فقط في شاشة قراءة صفحات القرآن
+                if (['quran-page'].includes(viewId)) {
+                    DOM.mainNav.classList.add('hidden-el'); DOM.appContent.classList.add('no-nav');
                 } else {
-                    DOM.mainNav.classList.remove('hidden-el'); 
-                    DOM.appContent.classList.remove('no-nav');
+                    DOM.mainNav.classList.remove('hidden-el'); DOM.appContent.classList.remove('no-nav');
                     if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
 
@@ -1261,6 +1268,19 @@
                 if (State.currentIndex > 0) { State.currentIndex--; this.renderCurrentDhikr(); }
             },
 
+            // وظيفة المشاركة الخاصة بالتطبيق ككل
+            shareApp() {
+                const text = `تطبيق الأذكار والعبادات 🌟\nأنصحك بتجربة هذا التطبيق لمتابعة أذكارك اليومية، صلواتك، وعباداتك بسهولة.\nتصفح أو حمّل التطبيق من هنا: \n${window.location.href}`;
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'تطبيق الأذكار والعبادات',
+                        text: text
+                    }).catch((err) => console.log('مشاركة ملغاة أو فاشلة', err));
+                } else {
+                    alert("تم إعداد النص للمشاركة:\n\n" + text);
+                }
+            },
+
             shareTracking() {
                 const targetDateStr = this.getDateOffsetStr(State.trackingOffset);
                 let data = JSON.parse(localStorage.getItem('khatmah_sunan_data')) || {};
@@ -1279,19 +1299,20 @@
                 let dateLbl = State.trackingOffset === 0 ? 'اليوم' : State.trackingOffset === -1 ? 'أمس' : targetDateStr;
                 
                 const text = `متابعة العبادات (${dateLbl})\nنسبة الإنجاز: ${formatNumber(percent)}%\n\n${listStr}\n\nتطبيق الأذكار والسنن 🚀`;
-                this.executeShare('متابعة العبادات', text);
+                
+                if (navigator.share) { navigator.share({ title: 'متابعة العبادات', text }); } 
+                else { alert('تم نسخ النص للمشاركة:\n\n' + text); }
             },
             shareStats() {
                 const stats = this.calculateSunanStats();
                 const text = `الحمد لله، أطول سلسلة التزام بالعبادات وصلت إلى ${formatNumber(stats.maxStreak)} أيام متتالية، والعبادة الأكثر التزاماً هي: ${stats.topSunnah}. 🌟`;
-                this.executeShare('إحصائيات العبادات', text);
+                if (navigator.share) { navigator.share({ title: 'إحصائيات العبادات', text }); } 
+                else { alert('تم نسخ النص للمشاركة:\n\n' + text); }
             },
             shareDhikr() {
                 const dhikr = State.currentList[State.currentIndex];
-                this.executeShare('ذكر اليوم', dhikr.text + (dhikr.reward ? `\n\nفضل الذكر: ${dhikr.reward}` : ''));
-            },
-            executeShare(title, text) {
-                if (navigator.share) { navigator.share({ title, text }); } 
+                const text = dhikr.text + (dhikr.reward ? `\n\nفضل الذكر: ${dhikr.reward}` : '');
+                if (navigator.share) { navigator.share({ title: 'ذكر اليوم', text }); } 
                 else { alert('تم نسخ النص للمشاركة:\n\n' + text); }
             },
             
@@ -1433,6 +1454,7 @@
                 imgEl.style.display = 'none';
                 loadingEl.style.display = 'block';
                 loadingEl.textContent = 'جاري تحميل الصفحة...';
+                loadingEl.style.color = 'var(--text-muted)';
                 
                 const pageStr = this.padPageNumber(this.currentPage);
                 
@@ -1446,7 +1468,7 @@
 
                 imgEl.onerror = () => {
                     loadingEl.textContent = 'الصورة غير موجودة. تأكد من رفع مجلد quran-images وفك الضغط عنه بشكل صحيح.';
-                    loadingEl.style.color = '#ff3b30';
+                    loadingEl.style.color = '#f44336';
                 };
 
                 localStorage.setItem('khatmah_last_page', this.currentPage);
