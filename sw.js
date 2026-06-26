@@ -1,4 +1,4 @@
-const CACHE_NAME = 'azkar-cache-v11';
+const CACHE_NAME = 'azkar-cache-v12';
 const urlsToCache = [
   './index.html',
   './manifest.json',
