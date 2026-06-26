@@ -4,231 +4,352 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>أذكار وسنن</title>
-    <meta name="theme-color" content="#407629">
+    <meta name="theme-color" content="#e0c3fc">
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #407629; --primary-dark: #325e20; --surface: #ffffff;
-            --background: #f4f5f0; --text-main: #222222; --text-muted: #666666;
-            --reward-text: #407629; --border: #e0e0e0; --progress-bg: #d5d6d2;
-            --progress-fill: #407629; --shadow: 0 2px 8px rgba(0,0,0,0.08);
-            --nav-height: 65px; --header-height: 60px; --dhikr-font-size: 1.45rem;
-            --chart-bar: #407629; --chart-bg: #e0e0e0;
+            /* iOS Liquid Glass Variables */
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            
+            --primary: #007aff;
+            --primary-dark: #0056b3;
+            --surface: rgba(255, 255, 255, 0.6);
+            --text-main: #1c1c1e;
+            --text-muted: #545456;
+            --reward-text: #34c759;
+            --border: rgba(255, 255, 255, 0.3);
+            
+            --progress-bg: rgba(0, 0, 0, 0.08);
+            --progress-fill: #007aff;
+            --nav-height: 85px;
+            --header-height: 65px;
+            --dhikr-font-size: 1.45rem;
+            --chart-bar: #007aff;
+            --chart-bg: rgba(0, 0, 0, 0.05);
+            
+            /* Background Gradients */
+            --bg-gradient: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #e2e2e2, #fdfbfb);
         }
+
         body[data-theme="dark"] {
-            --primary: #2d5a1b; --primary-dark: #1e3d12; --surface: #1e1e1e;
-            --background: #121212; --text-main: #e0e0e0; --text-muted: #aaaaaa;
-            --reward-text: #66bb6a; --border: #333333; --progress-bg: #333333;
-            --progress-fill: #66bb6a; --shadow: 0 2px 8px rgba(0,0,0,0.5);
-            --chart-bar: #66bb6a; --chart-bg: #333333;
+            --glass-bg: rgba(30, 30, 30, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            
+            --primary: #0a84ff;
+            --primary-dark: #0066cc;
+            --surface: rgba(40, 40, 40, 0.5);
+            --text-main: #f2f2f7;
+            --text-muted: #aeaeb2;
+            --reward-text: #30d158;
+            --border: rgba(255, 255, 255, 0.1);
+            
+            --progress-bg: rgba(255, 255, 255, 0.15);
+            --progress-fill: #0a84ff;
+            --chart-bar: #0a84ff;
+            --chart-bg: rgba(255, 255, 255, 0.1);
+            
+            --bg-gradient: linear-gradient(-45deg, #121420, #1b2838, #2a0845, #000000);
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--background); color: var(--text-main); display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; transition: background-color 0.3s, color 0.3s; }
         
-        header { background-color: var(--primary); color: white; height: var(--header-height); padding: 0 16px; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: 700; z-index: 100; transition: background-color 0.3s; }
-        .header-btn { background: none; border: none; color: white; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background: var(--bg-gradient); 
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; height: 100dvh; 
+            overflow: hidden; 
+            transition: color 0.4s ease; 
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Utility */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+            color: var(--text-main);
+        }
+
+        header { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-main); 
+            height: var(--header-height); 
+            padding: 0 16px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 1.35rem; 
+            font-weight: 800; 
+            z-index: 100; 
+            padding-top: env(safe-area-inset-top);
+        }
+        .header-btn { background: none; border: none; color: var(--text-main); cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: transform 0.2s; }
+        .header-btn:active { transform: scale(0.85); }
         .header-btn svg { width: 26px; height: 26px; fill: currentColor; }
-        #header-title { flex: 1; text-align: center; }
+        #header-title { flex: 1; text-align: center; letter-spacing: 0.5px; }
         
-        .reader-top-bar { background-color: var(--surface); padding: 10px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border); transition: background-color 0.3s; }
-        .reader-counter { font-weight: 700; font-size: 1.1rem; color: var(--text-muted); direction: ltr; }
-        .progress-bar-container { flex: 1; height: 6px; background: var(--progress-bg); border-radius: 4px; position: relative; }
-        .progress-fill { height: 100%; background: var(--progress-fill); width: 0%; transition: width 0.3s ease; border-radius: 4px; position: absolute; right: 0; }
-        .progress-fill::before { content: ''; position: absolute; left: -4px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background-color: var(--progress-fill); border-radius: 50%; }
+        .reader-top-bar { 
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 12px 20px; display: flex; align-items: center; gap: 16px; 
+        }
+        .reader-counter { font-weight: 800; font-size: 1.1rem; color: var(--text-muted); direction: ltr; }
+        .progress-bar-container { flex: 1; height: 8px; background: var(--progress-bg); border-radius: 6px; position: relative; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--progress-fill); width: 0%; transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: absolute; right: 0; border-radius: 6px;}
 
-        main { flex: 1; overflow-y: auto; position: relative; padding-bottom: var(--nav-height); transition: padding 0.3s; }
+        main { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; padding-bottom: calc(var(--nav-height) + 20px); transition: padding 0.3s; }
         main.no-nav { padding-bottom: 0 !important; }
-        .view { display: none; height: 100%; animation: fadeIn 0.2s ease forwards; }
+        .view { display: none; height: 100%; animation: slideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
         .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(5px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .home-container { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+        .home-container { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
         
-        .quran-summary-card { background: linear-gradient(135deg, #FFB300, #F57C00); color: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: transform 0.1s; }
-        .quran-summary-card:active { transform: scale(0.98); }
-        .qsc-info { display: flex; flex-direction: column; gap: 4px; }
-        .qsc-title { font-size: 1rem; opacity: 0.9; font-weight: 700; }
-        .qsc-details { font-size: 1.4rem; font-weight: 800; }
-        .qsc-icon svg { width: 40px; height: 40px; fill: white; opacity: 0.9; }
+        /* Updated Cards to Glass */
+        .quran-summary-card, .next-prayer-card, .home-stats-card {
+            cursor: pointer; position: relative; overflow: hidden; transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 24px;
+        }
+        .quran-summary-card:active, .next-prayer-card:active, .home-stats-card:active { transform: scale(0.96); }
+        
+        .quran-summary-card { border-left: 6px solid #FFB300; }
+        .next-prayer-card { border-left: 6px solid #34c759; }
+        .home-stats-card { border-left: 6px solid var(--primary); }
 
-        .next-prayer-card { background: linear-gradient(135deg, #1B5E20, #4CAF50); color: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .npc-info { display: flex; flex-direction: column; gap: 4px; }
-        .npc-title { font-size: 1rem; opacity: 0.9; }
-        .npc-name { font-size: 1.8rem; font-weight: 800; display: flex; align-items: baseline; gap: 8px; }
-        .npc-time { font-size: 1.1rem; font-weight: 500; opacity: 0.9; }
-        .npc-timer { font-size: 2.2rem; font-weight: 800; direction: ltr; text-align: right; letter-spacing: 2px; }
+        .qsc-info, .npc-info { display: flex; flex-direction: column; gap: 6px; }
+        .qsc-title, .npc-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
+        .qsc-details, .npc-name { font-size: 1.6rem; font-weight: 800; color: var(--text-main); }
+        .npc-name { display: flex; align-items: baseline; gap: 8px; }
+        .npc-time { font-size: 1.2rem; font-weight: 600; color: var(--primary); }
+        .npc-timer { font-size: 2.2rem; font-weight: 800; direction: ltr; text-align: right; letter-spacing: 2px; color: var(--text-main); }
         
-        .home-stats-card { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); cursor: pointer; position: relative; overflow: hidden; }
-        .home-stats-card:active { transform: scale(0.98); }
-        .hsc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .hsc-title { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-        .hsc-badge { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; backdrop-filter: blur(5px); }
+        .hsc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .hsc-title { font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+        .hsc-badge { background: rgba(0, 122, 255, 0.15); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 800; }
         .hsc-body { display: flex; justify-content: space-between; align-items: flex-end; }
-        .hsc-metrics { display: flex; gap: 20px; }
+        .hsc-metrics { display: flex; gap: 24px; }
         .hsc-metric { display: flex; flex-direction: column; }
-        .hsc-m-val { font-size: 1.8rem; font-weight: 800; direction: ltr; text-align: right; }
-        .hsc-m-lbl { font-size: 0.85rem; opacity: 0.9; }
-        .hsc-mini-chart { display: flex; gap: 4px; align-items: flex-end; height: 40px; }
-        .hsc-bar { width: 6px; background: rgba(255,255,255,0.3); border-radius: 4px; }
-        .hsc-bar.active { background: white; }
+        .hsc-m-val { font-size: 2rem; font-weight: 800; direction: ltr; text-align: right; color: var(--text-main); }
+        .hsc-m-lbl { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); }
+        .hsc-mini-chart { display: flex; gap: 6px; align-items: flex-end; height: 45px; }
+        .hsc-bar { width: 6px; background: rgba(150,150,150,0.3); border-radius: 6px; }
+        .hsc-bar.active { background: var(--primary); }
 
-        .grid-10 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .cat-card { color: white; border-radius: 12px; padding: 20px 12px; text-align: right; font-weight: 700; font-size: 1.1rem; box-shadow: var(--shadow); cursor: pointer; transition: transform 0.1s; display: flex; justify-content: space-between; align-items: center; }
-        .cat-card:active { transform: scale(0.96); }
-        .cat-card svg { width: 45px; height: 45px; fill: white; opacity: 0.8; }
-        .cat-card span { z-index: 1; font-size: 1.2rem; }
-        .cat-full { grid-column: span 2; padding: 25px 20px; }
+        .grid-10 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .cat-card { 
+            padding: 24px 16px; text-align: right; font-weight: 800; font-size: 1.2rem; 
+            cursor: pointer; transition: transform 0.2s; display: flex; justify-content: space-between; align-items: center; 
+        }
+        .cat-card:active { transform: scale(0.95); }
+        .cat-card svg { width: 42px; height: 42px; fill: var(--primary); opacity: 0.9; }
+        .cat-card span { z-index: 1; font-size: 1.3rem; color: var(--text-main); }
+        .cat-full { grid-column: span 2; padding: 28px 24px; }
 
-        .bg-morning { background: linear-gradient(135deg, #1976D2, #42A5F5); }
-        .bg-evening { background: linear-gradient(135deg, #311B92, #512DA8); }
-        .bg-sleep { background: linear-gradient(135deg, #880E4F, #C2185B); }
-        .bg-wake { background: linear-gradient(135deg, #01579B, #0288D1); }
-        .bg-masjid { background: linear-gradient(135deg, #BF360C, #E64A19); }
-        .bg-travel { background: linear-gradient(135deg, #827717, #AFB42B); }
-        .bg-quran { background: linear-gradient(135deg, #F57F17, #FBC02D); }
+        /* Subtle tints for categories instead of heavy gradients */
+        .bg-morning { background: rgba(25, 118, 210, 0.1); border-color: rgba(25, 118, 210, 0.2); }
+        .bg-evening { background: rgba(81, 45, 168, 0.1); border-color: rgba(81, 45, 168, 0.2); }
+        .bg-sleep { background: rgba(194, 24, 91, 0.1); border-color: rgba(194, 24, 91, 0.2); }
+        .bg-wake { background: rgba(2, 136, 209, 0.1); border-color: rgba(2, 136, 209, 0.2); }
+        .bg-masjid { background: rgba(230, 74, 25, 0.1); border-color: rgba(230, 74, 25, 0.2); }
+        .bg-travel { background: rgba(175, 180, 43, 0.1); border-color: rgba(175, 180, 43, 0.2); }
+        .bg-quran { background: rgba(251, 192, 45, 0.1); border-color: rgba(251, 192, 45, 0.2); }
 
-        .prayer-container { padding: 16px; }
-        .location-form { background: var(--surface); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+        body[data-theme="dark"] .bg-morning, body[data-theme="dark"] .bg-evening, body[data-theme="dark"] .bg-sleep, body[data-theme="dark"] .bg-wake, body[data-theme="dark"] .bg-masjid, body[data-theme="dark"] .bg-travel, body[data-theme="dark"] .bg-quran { background: rgba(255,255,255,0.05); }
+
+        .prayer-container { padding: 20px; }
+        .location-form { padding: 20px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
         .form-row { display: flex; gap: 12px; }
-        .form-select, .form-input { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 1rem; background: var(--background); color: var(--text-main); outline: none; }
-        .btn-search { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-family: inherit; font-weight: 700; cursor: pointer; width: 100%; font-size: 1.1rem; }
-        .prayer-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .prayer-item { background: var(--surface); padding: 16px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); border: 1px solid var(--border); font-weight: 700; font-size: 1.2rem; }
-        .prayer-item.active-prayer { background: var(--primary-light, #e8f5e9); border-color: var(--primary); color: var(--primary); }
-        .prayer-time { direction: ltr; font-weight: 800; }
+        .form-select, .form-input { 
+            flex: 1; padding: 14px; border: 1px solid var(--glass-border); border-radius: 14px; 
+            font-family: inherit; font-size: 1.1rem; font-weight: 600;
+            background: rgba(255,255,255,0.2); color: var(--text-main); outline: none; 
+            backdrop-filter: blur(10px);
+        }
+        body[data-theme="dark"] .form-select, body[data-theme="dark"] .form-input { background: rgba(0,0,0,0.2); }
+        
+        .btn-search { 
+            background: rgba(0, 122, 255, 0.15); color: var(--primary); border: 1px solid rgba(0, 122, 255, 0.3);
+            padding: 14px; border-radius: 14px; font-family: inherit; font-weight: 800; cursor: pointer; width: 100%; font-size: 1.2rem; 
+            backdrop-filter: blur(10px); transition: all 0.2s;
+        }
+        .btn-search:active { transform: scale(0.97); background: rgba(0, 122, 255, 0.25); }
+        
+        .prayer-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .prayer-item { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 1.3rem; }
+        .prayer-item.active-prayer { background: rgba(52, 199, 89, 0.15); border-color: rgba(52, 199, 89, 0.4); color: var(--reward-text); }
+        .prayer-time { direction: ltr; }
 
         /* Quran Section Styles */
         #view-quran { display: none; flex-direction: column; height: 100%; }
         #view-quran.active { display: flex; }
-        .quran-sub-nav { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .qt-tab { flex: 1; text-align: center; padding: 14px 0; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; }
+        .quran-sub-nav { display: flex; background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 20; }
+        .qt-tab { flex: 1; text-align: center; padding: 16px 0; font-weight: 800; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
         .qt-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-        .quran-tab-content { display: none; flex: 1; overflow-y: auto; padding: 16px; }
-        .quran-tab-content.active { display: block; animation: fadeIn 0.2s ease forwards; }
+        .quran-tab-content { display: none; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 20px; }
+        .quran-tab-content.active { display: block; animation: slideIn 0.3s forwards; }
 
-        .wird-setup-card, .wird-active-card { background: var(--surface); padding: 20px; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center; margin-bottom: 20px; }
-        .wird-active-card { border-top: 5px solid #FFB300; }
-        .w-title { font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
-        .w-ayah-box { background: var(--background); padding: 15px; border-radius: 12px; margin: 15px 0; font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; }
-        .w-ayah-box strong { color: var(--primary); font-size: 1.2rem; }
-        .w-actions { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
-        .btn-wird-read { flex: 1; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: transform 0.1s; }
-        .btn-wird-done { flex: 1; background: #FFB300; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: transform 0.1s; }
+        .wird-setup-card, .wird-active-card { padding: 24px; text-align: center; margin-bottom: 24px; }
+        .wird-active-card { border-top: 6px solid #FFB300; }
+        .w-title { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+        .w-ayah-box { background: rgba(0,0,0,0.05); padding: 18px; border-radius: 16px; margin: 20px 0; font-size: 1.2rem; color: var(--text-main); line-height: 1.8; font-weight: 600;}
+        body[data-theme="dark"] .w-ayah-box { background: rgba(255,255,255,0.05); }
+        .w-ayah-box strong { color: var(--primary); font-size: 1.3rem; }
+        
+        .w-actions { display: flex; gap: 14px; justify-content: center; margin-top: 24px; }
+        .btn-wird-read { flex: 1; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 14px; font-weight: 800; font-size: 1.2rem; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);}
+        .btn-wird-done { flex: 1; background: rgba(255, 179, 0, 0.15); color: #FFB300; border: 1px solid rgba(255, 179, 0, 0.4); padding: 14px; border-radius: 14px; font-weight: 800; font-size: 1.2rem; cursor: pointer; transition: transform 0.2s; }
         .btn-wird-read:active, .btn-wird-done:active { transform: scale(0.95); }
         
-        .w-progress-container { margin-top: 20px; display: flex; align-items: center; gap: 10px; direction: ltr; }
-        .w-prog-bar { flex: 1; height: 8px; background: var(--progress-bg); border-radius: 4px; overflow: hidden; }
-        .w-prog-fill { height: 100%; background: #FFB300; width: 0%; transition: width 0.3s ease; }
-        .w-prog-text { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); }
+        .w-progress-container { margin-top: 24px; display: flex; align-items: center; gap: 12px; direction: ltr; }
+        .w-prog-bar { flex: 1; height: 10px; background: var(--progress-bg); border-radius: 5px; overflow: hidden; }
+        .w-prog-fill { height: 100%; background: #FFB300; width: 0%; transition: width 0.4s ease; border-radius: 5px; }
+        .w-prog-text { font-size: 1rem; font-weight: 800; color: var(--text-muted); }
 
-        .quran-index-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .qi-item { display: flex; justify-content: space-between; background: var(--surface); padding: 15px; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; font-weight: 700; }
-        .qi-item:active { transform: scale(0.98); }
-        .qi-num { background: var(--background); width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; border-radius: 50%; color: var(--primary); font-size: 0.9rem; }
+        .quran-index-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .qi-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; cursor: pointer; font-weight: 800; font-size: 1.2rem;}
+        .qi-item:active { transform: scale(0.97); }
+        .qi-num { background: rgba(0, 122, 255, 0.1); width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; color: var(--primary); font-size: 1rem; }
 
-        /* Quran Page Viewer Styles */
-        #view-quran-page { display: none; flex-direction: column; background-color: var(--background); }
+        #view-quran-page { display: none; flex-direction: column; background: var(--bg-gradient); }
         #view-quran-page.active { display: flex; }
 
         /* Sunan Styles */
         #view-sunan { display: none; flex-direction: column; height: 100%; }
         #view-sunan.active { display: flex; }
-        .sunan-sub-nav { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .ss-tab { flex: 1; text-align: center; padding: 14px 0; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; }
+        .sunan-sub-nav { display: flex; background: var(--glass-bg); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 20; }
+        .ss-tab { flex: 1; text-align: center; padding: 16px 0; font-weight: 800; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
         .ss-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-        .sunan-tab-content { display: none; flex: 1; overflow-y: auto; }
-        .sunan-tab-content.active { display: block; animation: fadeIn 0.2s ease forwards; }
+        .sunan-tab-content { display: none; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .sunan-tab-content.active { display: block; animation: slideIn 0.3s forwards; }
 
-        .date-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--primary); color: white; font-weight: 700; }
-        .date-nav-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0 10px; }
-        .date-text { font-size: 1.1rem; }
-        .share-stat-btn { background: none; border: none; color: white; cursor: pointer; padding: 4px; display: flex; align-items: center; }
+        .date-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: rgba(0, 122, 255, 0.1); color: var(--primary); font-weight: 800; backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border);}
+        .date-nav-btn { background: none; border: none; color: inherit; font-size: 1.8rem; cursor: pointer; padding: 0 14px; font-weight: bold; transition: transform 0.2s;}
+        .date-nav-btn:active { transform: scale(0.8); }
+        .date-text { font-size: 1.2rem; }
+        .share-stat-btn { background: none; border: none; color: inherit; cursor: pointer; padding: 8px; display: flex; align-items: center; }
         
-        .sunan-sticky-stats { display: flex; gap: 12px; padding: 10px 16px; background: var(--background); position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--border); }
-        .stat-card { flex: 1; background: var(--surface); border-radius: 10px; padding: 10px; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .stat-title { font-size: 0.9rem; color: var(--text-muted); font-weight: 700; }
-        .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--primary); direction: ltr; }
+        .sunan-sticky-stats { display: flex; gap: 16px; padding: 16px 20px; background: transparent; position: sticky; top: 0; z-index: 10; }
+        .stat-card { flex: 1; padding: 14px; text-align: center; display: flex; justify-content: space-between; align-items: center; }
+        .stat-title { font-size: 1rem; color: var(--text-muted); font-weight: 800; }
+        .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--primary); direction: ltr; }
         
-        .sunan-list { padding: 16px; padding-bottom: 40px; touch-action: pan-y; }
-        .sunnah-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 16px; border-radius: 12px; margin-bottom: 10px; box-shadow: var(--shadow); border: 1px solid var(--border); font-weight: 700; font-size: 1.1rem; transition: opacity 0.3s; }
-        .sunnah-item.locked { opacity: 0.6; }
-        .sunnah-title { display: flex; align-items: center; gap: 6px; }
-        .locked-icon { font-size: 1rem; }
+        .sunan-list { padding: 20px; padding-bottom: 60px; touch-action: pan-y; }
+        .sunnah-item { padding: 20px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 1.2rem; transition: opacity 0.3s; }
+        .sunnah-item.locked { opacity: 0.5; }
+        .sunnah-title { display: flex; align-items: center; gap: 8px; }
+        .locked-icon { font-size: 1.1rem; }
         
-        .sunnah-actions { display: flex; gap: 10px; }
-        .s-btn { width: 45px; height: 45px; border-radius: 10px; border: 2px solid var(--border); background: var(--background); font-size: 1.3rem; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; }
-        .s-btn:active { transform: scale(0.9); }
+        .sunnah-actions { display: flex; gap: 12px; }
+        .s-btn { width: 48px; height: 48px; border-radius: 16px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.2); font-size: 1.4rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; justify-content: center; align-items: center; backdrop-filter: blur(10px);}
+        body[data-theme="dark"] .s-btn { background: rgba(0,0,0,0.2); }
+        .s-btn:active { transform: scale(0.85); }
         .s-btn:disabled { cursor: not-allowed; opacity: 0.5; }
-        .s-btn.btn-done.active { background: #e8f5e9; border-color: #4caf50; }
-        .s-btn.btn-missed.active { background: #ffebee; border-color: #f44336; }
+        .s-btn.btn-done.active { background: rgba(52, 199, 89, 0.2); border-color: #34c759; }
+        .s-btn.btn-missed.active { background: rgba(255, 59, 48, 0.2); border-color: #ff3b30; }
 
-        .ds-container { padding: 16px; }
-        .ds-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .ds-share-btn { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-family: inherit; font-weight: 700; cursor: pointer; display: flex; gap: 8px; align-items: center; }
-        .ds-card { background: var(--surface); border-radius: 12px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
-        .ds-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 16px; color: var(--text-main); }
-        .chart-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; padding-top: 20px; }
-        .chart-col { display: flex; flex-direction: column; align-items: center; flex: 1; gap: 8px; }
-        .c-bar-bg { width: 12px; height: 100px; background: var(--chart-bg); border-radius: 6px; display: flex; align-items: flex-end; }
-        .c-bar-fill { width: 100%; background: var(--chart-bar); border-radius: 6px; transition: height 0.5s ease; }
-        .c-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; }
-        .c-val { font-size: 0.75rem; font-weight: 700; color: var(--text-main); }
-        .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .ds-mini-card { background: var(--background); padding: 16px; border-radius: 10px; text-align: center; }
-        .ds-mc-val { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; direction: ltr; }
-        .ds-mc-lbl { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
+        .ds-container { padding: 20px; }
+        .ds-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .ds-share-btn { background: rgba(0, 122, 255, 0.15); color: var(--primary); border: 1px solid rgba(0, 122, 255, 0.3); padding: 10px 18px; border-radius: 12px; font-family: inherit; font-weight: 800; cursor: pointer; display: flex; gap: 8px; align-items: center; backdrop-filter: blur(5px);}
+        .ds-card { padding: 24px; margin-bottom: 20px; }
+        .ds-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 16px; color: var(--text-main); }
+        .chart-wrapper { display: flex; align-items: flex-end; justify-content: space-between; height: 160px; padding-top: 20px; }
+        .chart-col { display: flex; flex-direction: column; align-items: center; flex: 1; gap: 10px; }
+        .c-bar-bg { width: 14px; height: 100px; background: var(--chart-bg); border-radius: 7px; display: flex; align-items: flex-end; overflow: hidden;}
+        .c-bar-fill { width: 100%; background: var(--chart-bar); border-radius: 7px; transition: height 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .c-lbl { font-size: 0.85rem; color: var(--text-muted); font-weight: 800; }
+        .c-val { font-size: 0.85rem; font-weight: 800; color: var(--text-main); }
+        .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .ds-mini-card { background: rgba(0,0,0,0.05); padding: 20px; border-radius: 16px; text-align: center; }
+        body[data-theme="dark"] .ds-mini-card { background: rgba(255,255,255,0.05); }
+        .ds-mc-val { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 6px; direction: ltr; }
+        .ds-mc-lbl { font-size: 0.95rem; color: var(--text-muted); font-weight: 800; }
 
-        .tips-container { padding: 16px; }
-        .tip-card { background: var(--surface); border-radius: 12px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); border-right: 4px solid var(--primary); box-shadow: var(--shadow); }
-        .tip-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 8px; color: var(--primary); }
-        .tip-text { font-size: 1rem; line-height: 1.8; color: var(--text-main); text-align: justify; }
+        .tips-container { padding: 20px; }
+        .tip-card { padding: 24px; margin-bottom: 20px; border-right: 5px solid var(--primary); }
+        .tip-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; color: var(--primary); }
+        .tip-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-main); text-align: justify; font-weight: 600;}
 
         /* Reader Styles */
-        #view-reader { display: none; flex-direction: column; background-color: var(--background); }
+        #view-reader { display: none; flex-direction: column; background: transparent; }
         #view-reader.active { display: flex; }
-        .reader-content { flex: 1; padding: 24px 20px; overflow-y: auto; display: flex; flex-direction: column; cursor: pointer; user-select: none; touch-action: pan-y; }
-        .dhikr-text { font-size: var(--dhikr-font-size); transition: font-size 0.1s; line-height: 2.1; font-weight: 500; margin-bottom: 24px; text-align: justify; text-align-last: center; }
-        .reader-footer { padding: 16px 20px; background: var(--background); display: flex; flex-direction: column; gap: 16px; border-top: 1px solid var(--border); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
-        .fixed-reward { font-size: 1.05rem; font-weight: 700; color: var(--reward-text); text-align: center; min-height: 24px; display: flex; align-items: center; justify-content: center; }
-        .footer-controls { position: relative; display: flex; justify-content: center; align-items: center; height: 75px; }
-        .share-btn { position: absolute; right: 0; padding: 8px; color: var(--primary); cursor: pointer; border:none; background:none; }
-        .count-label { position: absolute; left: 0; font-weight: 700; font-size: 1.1rem; color: var(--primary); text-align: left; }
-        .circle-counter-container { position: relative; width: 75px; height: 75px; display: flex; justify-content: center; align-items: center; z-index: 2; cursor: pointer; transition: transform 0.1s; }
-        .circle-counter-container:active { transform: scale(0.9); }
+        .reader-content { flex: 1; min-height: 0; padding: 30px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; cursor: pointer; user-select: none; touch-action: pan-y; }
+        .dhikr-text { font-size: var(--dhikr-font-size); transition: font-size 0.2s ease; line-height: 2.2; font-weight: 700; margin-bottom: 30px; text-align: justify; text-align-last: center; text-shadow: 0 2px 10px rgba(0,0,0,0.05);}
+        .reader-footer { padding: 20px 24px; background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); display: flex; flex-direction: column; gap: 20px; border-top: 1px solid var(--glass-border); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 100;}
+        .fixed-reward { font-size: 1.1rem; font-weight: 800; color: var(--reward-text); text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+        .footer-controls { position: relative; display: flex; justify-content: center; align-items: center; height: 85px; }
+        .share-btn { position: absolute; right: 0; padding: 10px; color: var(--primary); cursor: pointer; border:none; background:rgba(0, 122, 255, 0.1); border-radius: 50%; backdrop-filter: blur(5px); transition: transform 0.2s;}
+        .share-btn:active { transform: scale(0.85); }
+        .count-label { position: absolute; left: 0; font-weight: 800; font-size: 1.2rem; color: var(--primary); text-align: left; }
+        .circle-counter-container { position: relative; width: 85px; height: 85px; display: flex; justify-content: center; align-items: center; z-index: 2; cursor: pointer; transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .circle-counter-container:active { transform: scale(0.85); }
         .circle-counter-container.hidden { display: none !important; }
         .progress-ring { position: absolute; top: 0; left: 0; }
-        .progress-ring__circle { transition: stroke-dashoffset 0.3s ease; transform: rotate(-90deg); transform-origin: 50% 50%; stroke-dasharray: 207; stroke-dashoffset: 207; stroke-linecap: round; }
-        .circle-counter-text { font-size: 1.8rem; font-weight: 700; color: var(--text-main); position: relative; z-index: 3; }
-        .btn-read { background: var(--primary); color: white; width: 100%; padding: 14px; border: none; border-radius: 6px; font-size: 1.2rem; font-weight: 700; font-family: inherit; cursor: pointer; box-shadow: var(--shadow); transition: transform 0.1s; }
-        .btn-read:active { transform: scale(0.98); background: var(--primary-dark); }
+        .progress-ring__circle { transition: stroke-dashoffset 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: rotate(-90deg); transform-origin: 50% 50%; stroke-dasharray: 238; stroke-dashoffset: 238; stroke-linecap: round; }
+        .circle-counter-text { font-size: 2rem; font-weight: 800; color: var(--text-main); position: relative; z-index: 3; }
+        .btn-read { background: var(--primary); color: white; width: 100%; padding: 16px; border: none; border-radius: 18px; font-size: 1.3rem; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3); transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .btn-read:active { transform: scale(0.95); background: var(--primary-dark); }
 
-        .settings-container { padding: 20px; }
-        .setting-item { background: var(--surface); padding: 16px; border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .settings-container { padding: 24px; }
+        .setting-item { padding: 20px; margin-bottom: 16px; display: flex; flex-direction: column; font-weight: 700; font-size: 1.1rem;}
         .setting-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .setting-controls { display: flex; gap: 10px; align-items: center; }
-        .btn-set { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 6px; font-family: inherit; font-weight: bold; cursor: pointer; font-size: 1.2rem; }
-        .btn-set.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); font-size: 1.1rem;}
-        .font-preview { border-top: 1px dashed var(--border); margin-top: 15px; padding-top: 15px; text-align: center; }
+        .setting-controls { display: flex; gap: 12px; align-items: center; }
+        .btn-set { background: rgba(0, 122, 255, 0.15); color: var(--primary); border: 1px solid rgba(0, 122, 255, 0.3); padding: 10px 24px; border-radius: 12px; font-family: inherit; font-weight: bold; cursor: pointer; font-size: 1.3rem; backdrop-filter: blur(5px); transition: transform 0.2s;}
+        .btn-set:active { transform: scale(0.9); }
+        .btn-set.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); font-size: 1.2rem;}
+        .font-preview { border-top: 1px dashed var(--glass-border); margin-top: 20px; padding-top: 20px; text-align: center; }
 
-        #view-completion { display: none; flex-direction: column; background-color: var(--background); }
+        #view-completion { display: none; flex-direction: column; background: transparent; }
         #view-completion.active { display: flex; }
         .completion-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
-        .check-icon-wrapper { width: 90px; height: 90px; background-color: #FBC02D; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(251, 192, 45, 0.4); }
-        .check-icon-wrapper svg { width: 50px; height: 50px; fill: white; }
-        .completion-msg { font-size: 1.3rem; font-weight: 700; color: var(--text-muted); line-height: 1.6; }
+        .check-icon-wrapper { width: 100px; height: 100px; background: rgba(251, 192, 45, 0.2); border: 2px solid #FBC02D; backdrop-filter: blur(10px); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(251, 192, 45, 0.3); animation: pop 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        @keyframes pop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .check-icon-wrapper svg { width: 55px; height: 55px; fill: #FBC02D; }
+        .completion-msg { font-size: 1.5rem; font-weight: 800; color: var(--text-main); line-height: 1.6; }
 
-        nav.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-height); background: #111111; border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); z-index: 1000; transition: transform 0.3s; }
-        nav.bottom-nav.hidden { transform: translateY(100%); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #888888; font-size: 0.8rem; gap: 4px; padding: 8px; cursor: pointer; transition: color 0.2s; font-weight: 500; }
-        .nav-item svg { width: 24px; height: 24px; fill: currentColor; }
-        .nav-item.active { color: #66bb6a; font-weight: 700; }
+        /* Floating Glass Bottom Nav */
+        nav.bottom-nav { 
+            position: fixed; bottom: 20px; left: 20px; right: 20px; height: 75px; 
+            background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border); border-radius: 35px;
+            display: flex; justify-content: space-around; align-items: center; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); z-index: 1000; 
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        }
+        nav.bottom-nav.hidden { transform: translateY(150%); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.85rem; gap: 6px; padding: 10px; cursor: pointer; transition: all 0.3s; font-weight: 700; width: 60px;}
+        .nav-item svg { width: 26px; height: 26px; fill: currentColor; transition: transform 0.2s;}
+        .nav-item.active { color: var(--primary); font-weight: 800; }
+        .nav-item.active svg { transform: translateY(-3px); }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
-        .modal-content { background: var(--surface); color: var(--text-main); width: 90%; max-width: 400px; border-radius: 16px; padding: 24px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; max-height: 80vh; overflow-y: auto; line-height: 1.8; font-size: 1.1rem; }
-        .modal-overlay.show .modal-content { transform: translateY(0); }
-        .close-btn { position: absolute; top: 12px; left: 16px; background: none; border: none; font-size: 2rem; color: var(--text-muted); cursor: pointer; line-height: 1; }
+        .modal-content { background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid var(--glass-border); color: var(--text-main); width: 90%; max-width: 400px; border-radius: 24px; padding: 30px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.2); transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); max-height: 80vh; overflow-y: auto; line-height: 1.8; font-size: 1.15rem; font-weight: 600;}
+        .modal-overlay.show .modal-content { transform: translateY(0) scale(1); }
+        .close-btn { position: absolute; top: 16px; left: 20px; background: rgba(0,0,0,0.05); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: background 0.2s;}
+        body[data-theme="dark"] .close-btn { background: rgba(255,255,255,0.1); }
+        .close-btn:active { background: rgba(0,0,0,0.1); }
         
         .hidden-el { display: none !important; }
     </style>
@@ -253,17 +374,17 @@
     <main id="app-content">
         <section id="view-home" class="view active">
             <div class="home-container">
-                <div class="quran-summary-card hidden-el" onclick="App.switchView('quran', 'quran')">
+                <div class="quran-summary-card glass-panel hidden-el" onclick="App.switchView('quran', 'quran')">
                     <div class="qsc-info">
                         <span class="qsc-title">ورد القرآن الكريم</span>
                         <span class="qsc-details" id="home-wird-status">لم تبدأ بعد</span>
                     </div>
-                    <div class="qsc-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
+                    <div class="qsc-icon" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">
+                        <svg viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: #FFB300; opacity: 0.3;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
                     </div>
                 </div>
 
-                <div class="next-prayer-card" id="home-next-prayer" onclick="App.switchView('prayer', 'prayer')">
+                <div class="next-prayer-card glass-panel" id="home-next-prayer" onclick="App.switchView('prayer', 'prayer')">
                     <div class="npc-info">
                         <span class="npc-title">الصلاة القادمة</span>
                         <div style="display:flex; align-items:baseline; gap: 8px;">
@@ -274,9 +395,9 @@
                     <div class="npc-timer" id="np-timer">--:--:--</div>
                 </div>
 
-                <div class="home-stats-card" onclick="App.switchView('sunan', 'sunan')">
+                <div class="home-stats-card glass-panel" onclick="App.switchView('sunan', 'sunan')">
                     <div class="hsc-header">
-                        <div class="hsc-title">متابعة السنن <span style="font-size: 0.9rem; opacity:0.8;">›</span></div>
+                        <div class="hsc-title">متابعة السنن <span style="font-size: 1rem; opacity:0.8;">›</span></div>
                         <div class="hsc-badge" id="hsc-badge">أحسنت! 🚀</div>
                     </div>
                     <div class="hsc-body">
@@ -289,14 +410,15 @@
                 </div>
 
                 <div class="grid-10" id="categories-grid"></div>
+                <div style="height: 10px; flex-shrink: 0;"></div>
             </div>
         </section>
 
         <section id="view-quran" class="view">
-            <div id="quran-coming-soon" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:14px; padding:24px; text-align:center;">
-                <svg viewBox="0 0 24 24" style="width:60px; height:60px; fill:var(--primary); opacity:0.8;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
-                <div style="font-size:1.3rem; font-weight:800; color:var(--text-main);">قريباً</div>
-                <div style="color:var(--text-muted); font-size:1rem;">قسم القرآن الكريم قيد التجهيز وسيتم تفعيله قريباً بإذن الله.</div>
+            <div id="quran-coming-soon" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:16px; padding:24px; text-align:center;">
+                <svg viewBox="0 0 24 24" style="width:70px; height:70px; fill:var(--primary); opacity:0.8;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
+                <div style="font-size:1.5rem; font-weight:800; color:var(--text-main);">قريباً</div>
+                <div style="color:var(--text-muted); font-size:1.1rem; font-weight: 600;">قسم القرآن الكريم قيد التجهيز وسيتم تفعيله قريباً بإذن الله.</div>
             </div>
 
             <div id="quran-real-content" class="hidden-el" style="display:flex; flex-direction:column; height:100%;">
@@ -311,14 +433,14 @@
                 </div>
 
                 <div class="quran-tab-content" id="quran-tab-wird">
-                    <div id="wird-setup" class="wird-setup-card">
+                    <div id="wird-setup" class="wird-setup-card glass-panel">
                         <div class="w-title">إعداد ختمة جديدة</div>
-                        <p style="color:var(--text-muted); margin-bottom:15px;">أدخل عدد الأيام المطلوبة لختم القرآن (الحد الأقصى 30 يوم)</p>
-                        <input type="number" id="wird-days-input" class="form-input" placeholder="عدد الأيام..." min="1" max="30" style="text-align:center; font-weight:bold; font-size:1.2rem; margin-bottom:15px;">
+                        <p style="color:var(--text-muted); margin-bottom:20px; font-weight: 600;">أدخل عدد الأيام المطلوبة لختم القرآن (الحد الأقصى 30 يوم)</p>
+                        <input type="number" id="wird-days-input" class="form-input" placeholder="عدد الأيام..." min="1" max="30" style="text-align:center; font-weight:bold; font-size:1.3rem; margin-bottom:20px; width: 100%;">
                         <button class="btn-search" onclick="QuranApp.setupWird()">حفظ والبدء</button>
                     </div>
 
-                    <div id="wird-active" class="wird-active-card hidden-el">
+                    <div id="wird-active" class="wird-active-card glass-panel hidden-el">
                         <div class="w-title" id="wird-progress-title">الورد الحالي: 1 من 30</div>
                         <div class="w-ayah-box">
                             <strong>البداية:</strong> <span id="wird-start-text">-</span><br><br>
@@ -335,9 +457,9 @@
                         </div>
                     </div>
 
-                    <div id="wird-finished" class="wird-active-card hidden-el">
-                        <div class="w-title" style="color:var(--primary); font-size:1.5rem;">تقبل الله طاعتكم! 🎉</div>
-                        <p style="color:var(--text-muted); margin: 15px 0;">لقد أتممت ختم القرآن الكريم بفضل الله.</p>
+                    <div id="wird-finished" class="wird-active-card glass-panel hidden-el">
+                        <div class="w-title" style="color:var(--primary); font-size:1.6rem;">تقبل الله طاعتكم! 🎉</div>
+                        <p style="color:var(--text-muted); margin: 20px 0; font-weight: 600;">لقد أتممت ختم القرآن الكريم بفضل الله.</p>
                         <div class="w-actions" style="flex-direction:column;">
                             <button class="btn-wird-read" onclick="alert('اللهم ارحمني بالقرآن واجعله لي إماماً ونوراً وهدى ورحمة...')">دعاء ختم القرآن</button>
                             <button class="btn-wird-done" onclick="QuranApp.resetWird()">بدء ختمة جديدة</button>
@@ -346,28 +468,28 @@
                 </div>
 
                 <div class="quran-tab-content" id="quran-tab-marks">
-                    <div style="text-align:center; color:var(--text-muted); padding: 40px 0;">قريباً.. سيتم حفظ علامات الوقوف هنا للعودة إليها.</div>
+                    <div style="text-align:center; color:var(--text-muted); padding: 50px 0; font-weight: 700; font-size: 1.1rem;">قريباً.. سيتم حفظ علامات الوقوف هنا للعودة إليها.</div>
                 </div>
             </div>
         </section>
 
 
         <section id="view-quran-page" class="view">
-            <div style="display: flex; justify-content: space-between; padding: 10px 15px; background: var(--surface); border-bottom: 1px solid var(--border);">
-                <button class="header-btn" onclick="QuranApp.nextPage()" style="width: auto; color: var(--primary); font-weight: bold;">التالية ‹</button>
-                <span id="current-quran-page-num" style="font-weight: bold; font-size: 1.1rem; align-self: center; color: var(--text-main);">--</span>
-                <button class="header-btn" onclick="QuranApp.prevPage()" style="width: auto; color: var(--primary); font-weight: bold;">› السابقة</button>
+            <div style="display: flex; justify-content: space-between; padding: 12px 20px; background: var(--glass-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);">
+                <button class="header-btn" onclick="QuranApp.nextPage()" style="width: auto; color: var(--primary); font-weight: 800; font-size: 1.1rem;">التالية ‹</button>
+                <span id="current-quran-page-num" style="font-weight: 800; font-size: 1.2rem; align-self: center; color: var(--text-main);">--</span>
+                <button class="header-btn" onclick="QuranApp.prevPage()" style="width: auto; color: var(--primary); font-weight: 800; font-size: 1.1rem;">› السابقة</button>
             </div>
             
-            <div style="flex: 1; overflow-y: auto; text-align: center; padding: 10px;" id="quran-image-container">
-                <div id="quran-loading" style="padding: 50px; color: var(--text-muted); font-weight: bold;">جاري تحميل الصفحة...</div>
-                <img id="quran-page-img" src="" alt="صفحة القرآن" style="width: 100%; max-width: 100%; display: none; margin: 0 auto; box-shadow: var(--shadow); border-radius: 8px;">
+            <div style="flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; text-align: center; padding: 15px;" id="quran-image-container">
+                <div id="quran-loading" style="padding: 60px; color: var(--text-muted); font-weight: 800; font-size: 1.2rem;">جاري تحميل الصفحة...</div>
+                <img id="quran-page-img" src="" alt="صفحة القرآن" style="width: 100%; max-width: 100%; display: none; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-radius: 12px;">
             </div>
         </section>
 
         <section id="view-prayer" class="view">
             <div class="prayer-container">
-                <div class="location-form">
+                <div class="location-form glass-panel">
                     <div class="form-row">
                         <select class="form-select" id="prayer-country">
                             <option value="Saudi Arabia" selected>السعودية</option>
@@ -380,7 +502,7 @@
                         <input type="text" class="form-input" id="prayer-city" placeholder="المدينة (مثال: Jeddah)" value="Jeddah">
                     </div>
                     <button class="btn-search" onclick="App.fetchPrayerTimes()">تحديث المواقيت</button>
-                    <div id="prayer-status" style="font-size:0.9rem; color:var(--text-muted); text-align:center;"></div>
+                    <div id="prayer-status" style="font-size:1rem; font-weight: 600; color:var(--text-muted); text-align:center;"></div>
                 </div>
                 <ul class="prayer-list" id="prayer-list-container"></ul>
             </div>
@@ -400,14 +522,14 @@
                     <div style="display:flex; align-items:center;">
                         <button class="date-nav-btn" onclick="App.changeTrackingDate(-1)">‹</button>
                         <button class="share-stat-btn" onclick="App.shareTracking()" title="مشاركة">
-                            <svg style="width:22px; height:22px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                            <svg style="width:24px; height:24px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
                     </div>
                 </div>
 
                 <div class="sunan-sticky-stats">
-                    <div class="stat-card"><span class="stat-title">الإنجاز</span><span class="stat-value" id="sunan-today-percent">0%</span></div>
-                    <div class="stat-card"><span class="stat-title">المتوسط</span><span class="stat-value" id="sunan-avg-percent">0%</span></div>
+                    <div class="stat-card glass-panel"><span class="stat-title">الإنجاز</span><span class="stat-value" id="sunan-today-percent">0%</span></div>
+                    <div class="stat-card glass-panel"><span class="stat-title">المتوسط</span><span class="stat-value" id="sunan-avg-percent">0%</span></div>
                 </div>
                 <div class="sunan-list" id="sunan-list-container"></div>
             </div>
@@ -417,22 +539,22 @@
                     <div class="ds-header">
                         <div class="ds-title" style="margin:0;">أداء آخر 7 أيام</div>
                         <button class="ds-share-btn" onclick="App.shareStats()">
-                            <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg> مشاركة
+                            <svg style="width:22px; height:22px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg> مشاركة
                         </button>
                     </div>
-                    <div class="ds-card"><div class="chart-wrapper" id="ds-weekly-chart"></div></div>
+                    <div class="ds-card glass-panel"><div class="chart-wrapper" id="ds-weekly-chart"></div></div>
                     <div class="ds-grid">
-                        <div class="ds-mini-card"><div class="ds-mc-val" id="ds-best-streak">0</div><div class="ds-mc-lbl">أطول سلسلة أيام</div></div>
-                        <div class="ds-mini-card"><div class="ds-mc-val" id="ds-top-sunnah" style="font-size:1.2rem;">-</div><div class="ds-mc-lbl">الأكثر التزاماً</div></div>
+                        <div class="ds-mini-card glass-panel"><div class="ds-mc-val" id="ds-best-streak">0</div><div class="ds-mc-lbl">أطول سلسلة أيام</div></div>
+                        <div class="ds-mini-card glass-panel"><div class="ds-mc-val" id="ds-top-sunnah" style="font-size:1.4rem;">-</div><div class="ds-mc-lbl">الأكثر التزاماً</div></div>
                     </div>
                 </div>
             </div>
 
             <div class="sunan-tab-content" id="sunan-tab-tips">
                 <div class="tips-container">
-                    <div class="tip-card"><div class="tip-title">قيام الليل</div><div class="tip-text">شرف المؤمن قيامه بالليل. يكفيك أن تصلي ركعتين خفيفتين قبل الفجر لتُكتب من القائمين.</div></div>
-                    <div class="tip-card"><div class="tip-title">صلاة الضحى</div><div class="tip-text">تُجزئ عن صدقة 360 مفصل في جسدك. ركعتان فقط تجلبان البركة في يومك.</div></div>
-                    <div class="tip-card"><div class="tip-title">السنن الرواتب</div><div class="tip-text">12 ركعة في اليوم والليلة، من حافظ عليها بُني له بيت في الجنة.</div></div>
+                    <div class="tip-card glass-panel"><div class="tip-title">قيام الليل</div><div class="tip-text">شرف المؤمن قيامه بالليل. يكفيك أن تصلي ركعتين خفيفتين قبل الفجر لتُكتب من القائمين.</div></div>
+                    <div class="tip-card glass-panel"><div class="tip-title">صلاة الضحى</div><div class="tip-text">تُجزئ عن صدقة 360 مفصل في جسدك. ركعتان فقط تجلبان البركة في يومك.</div></div>
+                    <div class="tip-card glass-panel"><div class="tip-title">السنن الرواتب</div><div class="tip-text">12 ركعة في اليوم والليلة، من حافظ عليها بُني له بيت في الجنة.</div></div>
                 </div>
             </div>
         </section>
@@ -445,12 +567,12 @@
                 <div class="fixed-reward" id="dhikr-reward"></div>
                 <div class="footer-controls">
                     <button class="share-btn" onclick="App.shareDhikr()">
-                        <svg style="width:26px; height:26px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <svg style="width:28px; height:28px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                     </button>
                     <div class="circle-counter-container" id="circle-counter-container">
-                        <svg class="progress-ring" width="75" height="75">
-                            <circle stroke="#a5a6a3" stroke-width="4" fill="var(--surface)" r="33" cx="37.5" cy="37.5" />
-                            <circle class="progress-ring__circle" id="counter-ring" stroke="var(--primary)" stroke-width="5" fill="transparent" r="33" cx="37.5" cy="37.5" />
+                        <svg class="progress-ring" width="85" height="85">
+                            <circle stroke="rgba(0,0,0,0.1)" stroke-width="6" fill="var(--glass-bg)" r="38" cx="42.5" cy="42.5" />
+                            <circle class="progress-ring__circle" id="counter-ring" stroke="var(--primary)" stroke-width="6" fill="transparent" r="38" cx="42.5" cy="42.5" />
                         </svg>
                         <div class="circle-counter-text" id="circle-counter-text">0</div>
                     </div>
@@ -465,21 +587,21 @@
                 <div class="check-icon-wrapper"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                 <div class="completion-msg" id="completion-msg">لقد أتممت القراءة</div>
             </div>
-            <div class="reader-footer"><button class="btn-read disabled-btn" onclick="App.switchView('home')">الرئيسية</button></div>
+            <div class="reader-footer"><button class="btn-read" onclick="App.switchView('home')">الرئيسية</button></div>
         </section>
         
         <section id="view-settings" class="view">
             <div class="settings-container">
-                <div class="setting-item">
+                <div class="setting-item glass-panel">
                     <div class="setting-row"><span>حجم خط الأذكار</span><div class="setting-controls"><button class="btn-set" id="btn-font-plus">+</button><button class="btn-set" id="btn-font-minus">-</button></div></div>
                     <div class="font-preview"><div class="dhikr-text" style="margin-bottom: 0;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div></div>
                 </div>
-                <div class="setting-item" style="flex-direction: row;"><div class="setting-row"><span>شكل الأرقام</span><button class="btn-set outline" id="btn-num-type">123</button></div></div>
-                <div class="setting-item" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('install')">
-                    <div class="setting-row"><span>كيفية تثبيت التطبيق</span><span style="color:var(--primary); font-size:1.2rem;">📱</span></div>
+                <div class="setting-item glass-panel" style="flex-direction: row;"><div class="setting-row"><span>شكل الأرقام</span><button class="btn-set outline" id="btn-num-type">123</button></div></div>
+                <div class="setting-item glass-panel" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('install')">
+                    <div class="setting-row"><span>كيفية تثبيت التطبيق</span><span style="color:var(--primary); font-size:1.4rem;">📱</span></div>
                 </div>
-                <div class="setting-item" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('use')"><div class="setting-row"><span>سياسة الاستخدام</span><span style="color:var(--text-muted); font-size:1.2rem;">‹</span></div></div>
-                <div class="setting-item" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('privacy')"><div class="setting-row"><span>سياسة الخصوصية</span><span style="color:var(--text-muted); font-size:1.2rem;">‹</span></div></div>
+                <div class="setting-item glass-panel" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('use')"><div class="setting-row"><span>سياسة الاستخدام</span><span style="color:var(--text-muted); font-size:1.4rem; font-weight: bold;">‹</span></div></div>
+                <div class="setting-item glass-panel" style="flex-direction: row; cursor:pointer;" onclick="App.openModal('privacy')"><div class="setting-row"><span>سياسة الخصوصية</span><span style="color:var(--text-muted); font-size:1.4rem; font-weight: bold;">‹</span></div></div>
             </div>
         </section>
 
@@ -520,21 +642,20 @@
             { id: 'wudu_nawm', title: 'الوضوء قبل النوم', depends: 'Isha' }
         ];
 
-        // مصفوفات الأذكار سيتم تعبئتها ديناميكياً
         const DATA = {
             categories: [
-                { id: 'morning', title: 'أذكار الصباح', class: 'cat-full bg-morning', icon: '<path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm0-12a1 1 0 011 1v2a1 1 0 11-2 0V4a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm8-9a1 1 0 010 2h-2a1 1 0 110-2h2zM6 12a1 1 0 01-1 1H3a1 1 0 110-2h2a1 1 0 011 1zm11.657-6.071a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zM7.757 16.243a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zm11.314 4.95a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414zM6.343 7.757a1 1 0 01-1.414 0L3.515 6.343a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414z"/>' },
-                { id: 'evening', title: 'أذكار المساء', class: 'cat-full bg-evening', icon: '<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>' },
-                { id: 'sleep', title: 'أذكار النوم', class: 'bg-sleep', icon: '<path d="M2 3.99L3.99 2 22 20.01 20.01 22 2 3.99zM11.66 16c1.68 2.28 4.7 3.09 7.4 1.94.38-.16.74-.36 1.08-.58l-5.69-5.69c-.61 2.5-2.79 4.33-5.26 4.33H8.38l3.28 3.28v-3.28zm8.79-11c-.34-.23-.7-.44-1.07-.6A6.98 6.98 0 0 0 12 3v1h-1V2h-1v2H9V2H8v2H7V2H6v3.28l12.45 12.45c.46-1.46.38-3.11-.4-4.5-1.57-2.8-4.91-4-8.05-3.23l7.98 7.98z"/>' },
-                { id: 'prayer_adhkar', title: 'أذكار الصلاة', class: 'bg-masjid', icon: '<path d="M12 2l-5 4v2h10V6l-5-4zm0 2.5l3 2.4V8H9V6.9l3-2.4zM4 10v10H2v2h20v-2h-2V10H4zm14 10H6v-8h12v8z"/>' },
-                { id: 'misc', title: 'أذكار متنوعة', class: 'cat-full bg-travel', icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>' }
+                { id: 'morning', title: 'أذكار الصباح', class: 'cat-full bg-morning glass-panel', icon: '<path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm0-12a1 1 0 011 1v2a1 1 0 11-2 0V4a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm8-9a1 1 0 010 2h-2a1 1 0 110-2h2zM6 12a1 1 0 01-1 1H3a1 1 0 110-2h2a1 1 0 011 1zm11.657-6.071a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zM7.757 16.243a1 1 0 010 1.414l-1.414 1.414a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zm11.314 4.95a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414zM6.343 7.757a1 1 0 01-1.414 0L3.515 6.343a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414z"/>' },
+                { id: 'evening', title: 'أذكار المساء', class: 'cat-full bg-evening glass-panel', icon: '<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>' },
+                { id: 'sleep', title: 'أذكار النوم', class: 'bg-sleep glass-panel', icon: '<path d="M2 3.99L3.99 2 22 20.01 20.01 22 2 3.99zM11.66 16c1.68 2.28 4.7 3.09 7.4 1.94.38-.16.74-.36 1.08-.58l-5.69-5.69c-.61 2.5-2.79 4.33-5.26 4.33H8.38l3.28 3.28v-3.28zm8.79-11c-.34-.23-.7-.44-1.07-.6A6.98 6.98 0 0 0 12 3v1h-1V2h-1v2H9V2H8v2H7V2H6v3.28l12.45 12.45c.46-1.46.38-3.11-.4-4.5-1.57-2.8-4.91-4-8.05-3.23l7.98 7.98z"/>' },
+                { id: 'prayer_adhkar', title: 'أذكار الصلاة', class: 'bg-masjid glass-panel', icon: '<path d="M12 2l-5 4v2h10V6l-5-4zm0 2.5l3 2.4V8H9V6.9l3-2.4zM4 10v10H2v2h20v-2h-2V10H4zm14 10H6v-8h12v8z"/>' },
+                { id: 'misc', title: 'أذكار متنوعة', class: 'cat-full bg-travel glass-panel', icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>' }
             ],
             adhkar: { morning: [], evening: [], sleep: [], prayer_adhkar: [] },
             miscCategories: []
         };
 
         const State = { activeView: 'home', currentCategoryId: null, currentList: [], currentIndex: 0, currentCount: 0, trackingOffset: 0 };
-        const CIRCUMFERENCE = 207.34;
+        const CIRCUMFERENCE = 238.76;
         let prayerInterval;
 
         const DOM = {
@@ -558,16 +679,30 @@
 
         const App = {
             async init() {
-                // جلب الأذكار من ملف JSON أولاً
                 await this.loadAdhkarData();
-                
                 this.renderHomeGrid();
                 this.bindEvents();
                 this.bindSwipeAndPinch();
+                this.bindBackButton();
                 this.applySettings();
                 this.initPrayerTimes();
                 this.updateHomeStats();
                 QuranApp.init(); 
+            },
+
+            bindBackButton() {
+                history.pushState({ app: 'azkar' }, '');
+                window.addEventListener('popstate', () => {
+                    history.pushState({ app: 'azkar' }, '');
+                    if (State.activeView === 'home') {
+                        if (confirm('هل تريد الخروج من التطبيق؟')) {
+                            history.go(-(history.length));
+                            window.close();
+                        }
+                    } else {
+                        this.switchView('home');
+                    }
+                });
             },
 
             async loadAdhkarData() {
@@ -575,7 +710,6 @@
                     const response = await fetch('./azkar_obj.json');
                     const data = await response.json();
                     
-                    // تفريغ المصفوفات
                     DATA.adhkar = { morning: [], evening: [], sleep: [], prayer_adhkar: [] };
                     DATA.miscCategories = [];
                     const miscIndexByTitle = {};
@@ -602,7 +736,6 @@
                         } else if (this.isPrayerCategory(cat)) {
                             DATA.adhkar.prayer_adhkar.push(dhikrObj);
                         } else {
-                            // أي تصنيف آخر موجود في الملف يُجمع تلقائياً تحت "أذكار متنوعة" بقسم خاص باسمه الحقيقي
                             const key = cat || 'أذكار متنوعة أخرى';
                             if (!(key in miscIndexByTitle)) {
                                 miscIndexByTitle[key] = DATA.miscCategories.length;
@@ -617,8 +750,6 @@
                 }
             },
 
-            // ينسّق مرجع الذكر: يحذف "المرجع" ويكتب "رواه" إن كان حديثاً، ولا يكتب شيئاً إن كان آية أو سورة
-            // يحدد إذا كان التصنيف من أذكار/أدعية الصلاة (داخل الصلاة، الأذان، الوتر...)
             isPrayerCategory(cat) {
                 const keywords = ['صلاة', 'سجود', 'ركوع', 'تشهد', 'استفتاح', 'قنوت', 'آذان', 'اذان', 'وتر'];
                 return keywords.some(k => cat.includes(k));
@@ -733,12 +864,12 @@
             openMiscView() {
                 const grid = document.getElementById('misc-categories-grid');
                 if (DATA.miscCategories.length === 0) {
-                    grid.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:40px 0;">لا توجد أقسام أخرى حالياً</div>';
+                    grid.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:40px 0; font-weight:bold;">لا توجد أقسام أخرى حالياً</div>';
                 } else {
                     grid.innerHTML = DATA.miscCategories.map(mc => `
-                        <div class="cat-card bg-travel" style="grid-column: span 2;" onclick="App.startReading('${mc.id}')">
+                        <div class="cat-card bg-travel glass-panel" style="grid-column: span 2;" onclick="App.startReading('${mc.id}')">
                             <span>${mc.title}</span>
-                            <span style="font-size:0.85rem; opacity:0.85; font-weight:500;">(${formatNumber(mc.items.length)})</span>
+                            <span style="font-size:0.95rem; opacity:0.85; font-weight:600;">(${formatNumber(mc.items.length)})</span>
                         </div>
                     `).join('');
                 }
@@ -822,7 +953,7 @@
                     let lockHtml = !unlocked ? '<span class="locked-icon">🔒</span>' : '';
                     
                     return `
-                        <div class="sunnah-item ${!unlocked ? 'locked' : ''}">
+                        <div class="sunnah-item glass-panel ${!unlocked ? 'locked' : ''}">
                             <div class="sunnah-title">${item.title} ${lockHtml}</div>
                             <div class="sunnah-actions">
                                 <button class="s-btn btn-missed ${status === 'missed' ? 'active' : ''}" 
@@ -905,7 +1036,7 @@
                     let ampm = hr >= 12 ? 'م' : 'ص';
                     hr = hr % 12 || 12;
                     let displayTime = `${formatNumber(hr)}:${formatNumber(timeParts[1])} ${ampm}`;
-                    html += `<li class="prayer-item"><span class="prayer-name">${arNames[k]}</span><span class="prayer-time">${displayTime}</span></li>`;
+                    html += `<li class="prayer-item glass-panel"><span class="prayer-name">${arNames[k]}</span><span class="prayer-time">${displayTime}</span></li>`;
                 });
                 document.getElementById('prayer-list-container').innerHTML = html;
                 this.updateNextPrayerTimer();
@@ -960,7 +1091,6 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                // إخفاء الشريط السفلي فقط في شاشة قراءة صفحات القرآن (تأخذ الشاشة كاملة)، ويبقى ظاهراً في صفحات الأذكار
                 if (['quran-page'].includes(viewId)) {
                     DOM.mainNav.classList.add('hidden-el'); DOM.appContent.classList.add('no-nav');
                 } else {
@@ -1148,12 +1278,11 @@
                 });
             },
             loadSurahs() {
-                // الفهرس المصغر للتجربة 
                 const surahs = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة"]; 
                 let html = '';
                 surahs.forEach((name, i) => {
                     let startPage = i === 0 ? 1 : i === 1 ? 2 : i === 2 ? 50 : i === 3 ? 77 : 106;
-                    html += `<li class="qi-item" onclick="QuranApp.openPage(${startPage})">
+                    html += `<li class="qi-item glass-panel" onclick="QuranApp.openPage(${startPage})">
                                 <span>سورة ${name}</span>
                                 <span class="qi-num">${formatNumber(startPage)}</span>
                              </li>`;
@@ -1237,7 +1366,6 @@
                 imgEl.style.display = 'none';
                 loadingEl.style.display = 'block';
                 loadingEl.textContent = 'جاري تحميل الصفحة...';
-                loadingEl.style.color = 'var(--text-muted)';
                 
                 const pageStr = this.padPageNumber(this.currentPage);
                 
@@ -1251,7 +1379,7 @@
 
                 imgEl.onerror = () => {
                     loadingEl.textContent = 'الصورة غير موجودة. تأكد من رفع مجلد quran-images وفك الضغط عنه بشكل صحيح.';
-                    loadingEl.style.color = '#f44336';
+                    loadingEl.style.color = '#ff3b30';
                 };
 
                 localStorage.setItem('khatmah_last_page', this.currentPage);
