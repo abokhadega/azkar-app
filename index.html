@@ -35,6 +35,7 @@
             
             /* Vibrant Light Background Gradients */
             --bg-gradient: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #E0C3FC, #8EC5FC);
+            --background: #eef1f4;
         }
 
         body[data-theme="dark"] {
@@ -56,21 +57,38 @@
             --chart-bg: rgba(255, 255, 255, 0.1);
             
             --bg-gradient: linear-gradient(-45deg, #121420, #1b2838, #2a0845, #000000);
+            --background: #060606;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: "San Francisco", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
-            background: var(--bg-gradient); 
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
+            background-color: var(--background); 
             color: var(--text-main); 
             display: flex; 
             flex-direction: column; 
             height: 100vh; height: 100dvh; 
             overflow: hidden; 
             transition: color 0.4s ease; 
+            position: relative;
+        }
+
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(circle at 12% 12%, rgba(48,209,88,0.38), transparent 42%),
+                radial-gradient(circle at 88% 10%, rgba(10,132,255,0.30), transparent 46%),
+                radial-gradient(circle at 80% 78%, rgba(94,92,230,0.26), transparent 46%),
+                radial-gradient(circle at 15% 85%, rgba(255,159,10,0.22), transparent 42%);
+            filter: blur(50px); transition: opacity 0.3s;
+        }
+        body[data-theme="dark"]::before {
+            background:
+                radial-gradient(circle at 12% 12%, rgba(48,209,88,0.30), transparent 42%),
+                radial-gradient(circle at 88% 10%, rgba(10,132,255,0.22), transparent 46%),
+                radial-gradient(circle at 80% 78%, rgba(94,92,230,0.20), transparent 46%),
+                radial-gradient(circle at 15% 85%, rgba(255,159,10,0.14), transparent 42%);
         }
         
         @keyframes gradientBG {
@@ -176,13 +194,13 @@
         .cat-card span { z-index: 1; font-size: 1.3rem; color: var(--text-main); }
         .cat-full { grid-column: span 2; padding: 28px 24px; }
 
-        .bg-morning { background: rgba(25, 118, 210, 0.25); border-color: rgba(25, 118, 210, 0.4); }
-        .bg-evening { background: rgba(81, 45, 168, 0.25); border-color: rgba(81, 45, 168, 0.4); }
-        .bg-sleep { background: rgba(194, 24, 91, 0.25); border-color: rgba(194, 24, 91, 0.4); }
-        .bg-wake { background: rgba(2, 136, 209, 0.25); border-color: rgba(2, 136, 209, 0.4); }
-        .bg-masjid { background: rgba(230, 74, 25, 0.25); border-color: rgba(230, 74, 25, 0.4); }
-        .bg-travel { background: rgba(175, 180, 43, 0.25); border-color: rgba(175, 180, 43, 0.4); }
-        .bg-quran { background: rgba(251, 192, 45, 0.25); border-color: rgba(251, 192, 45, 0.4); }
+        .bg-morning { background: rgba(25, 118, 210, 0.45); border-color: rgba(25, 118, 210, 0.6); }
+        .bg-evening { background: rgba(81, 45, 168, 0.45); border-color: rgba(81, 45, 168, 0.6); }
+        .bg-sleep { background: rgba(194, 24, 91, 0.45); border-color: rgba(194, 24, 91, 0.6); }
+        .bg-wake { background: rgba(2, 136, 209, 0.45); border-color: rgba(2, 136, 209, 0.6); }
+        .bg-masjid { background: rgba(230, 74, 25, 0.45); border-color: rgba(230, 74, 25, 0.6); }
+        .bg-travel { background: rgba(175, 180, 43, 0.45); border-color: rgba(175, 180, 43, 0.6); }
+        .bg-quran { background: rgba(251, 192, 45, 0.45); border-color: rgba(251, 192, 45, 0.6); }
 
         body[data-theme="dark"] .bg-morning, body[data-theme="dark"] .bg-evening, body[data-theme="dark"] .bg-sleep, body[data-theme="dark"] .bg-wake, body[data-theme="dark"] .bg-masjid, body[data-theme="dark"] .bg-travel, body[data-theme="dark"] .bg-quran { background: rgba(255,255,255,0.05); }
 
@@ -250,7 +268,7 @@
         .qi-item:active { transform: scale(0.97); }
         .qi-num { background: rgba(0, 122, 255, 0.1); width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; color: var(--primary); font-size: 1rem; }
 
-        #view-quran-page { display: none; flex-direction: column; background: var(--bg-gradient); }
+        #view-quran-page { display: none; flex-direction: column; background: var(--background); }
         #view-quran-page.active { display: flex; }
 
         /* Sunan Styles (العبادات) */
@@ -324,7 +342,7 @@
         .tip-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-main); text-align: justify; font-weight: 600;}
 
         /* Reader Styles */
-        #view-reader { display: none; flex-direction: column; background: transparent; height: 100%;}
+        #view-reader { display: none; flex-direction: column; background: var(--background); height: 100%;}
         #view-reader.active { display: flex; }
         .reader-content { flex: 1; min-height: 0; padding: 30px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; cursor: pointer; user-select: none; touch-action: pan-y; }
         .dhikr-text { font-size: var(--dhikr-font-size); transition: font-size 0.2s ease; line-height: 2.2; font-weight: 700; margin-bottom: 30px; text-align: justify; text-align-last: center; text-shadow: 0 2px 10px rgba(0,0,0,0.05);}
@@ -350,7 +368,7 @@
         .btn-set.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); font-size: 1.2rem;}
         .font-preview { border-top: 1px dashed var(--glass-border); margin-top: 20px; padding-top: 20px; text-align: center; }
 
-        #view-completion { display: none; flex-direction: column; background: transparent; height: 100%;}
+        #view-completion { display: none; flex-direction: column; background: var(--background); height: 100%;}
         #view-completion.active { display: flex; }
         .completion-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
         .check-icon-wrapper { width: 100px; height: 100px; background: rgba(251, 192, 45, 0.2); border: 2px solid #FBC02D; backdrop-filter: blur(10px); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(251, 192, 45, 0.3); animation: pop 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
