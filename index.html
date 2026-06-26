@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* iOS Liquid Glass Variables */
+            /* iOS Liquid Glass Variables - Enhanced Vibrant Colors for Light Mode */
             --glass-bg: rgba(255, 255, 255, 0.45);
             --glass-border: rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
@@ -30,8 +30,8 @@
             --chart-bar: #007aff;
             --chart-bg: rgba(0, 0, 0, 0.05);
             
-            /* Background Gradients */
-            --bg-gradient: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #e2e2e2, #fdfbfb);
+            /* Vibrant Light Background Gradients */
+            --bg-gradient: linear-gradient(-45deg, #FFDEE9, #B5FFFC, #E0C3FC, #8EC5FC);
         }
 
         body[data-theme="dark"] {
@@ -119,7 +119,8 @@
         .progress-bar-container { flex: 1; height: 8px; background: var(--progress-bg); border-radius: 6px; position: relative; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--progress-fill); width: 0%; transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: absolute; right: 0; border-radius: 6px;}
 
-        main { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; padding-bottom: calc(var(--nav-height) + 20px); transition: padding 0.3s; }
+        /* زيادة البادنج السفلي لحل مشكلة إخفاء الأزرار السفلية خلف الشريط */
+        main { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; padding-bottom: 140px; transition: padding 0.3s; }
         main.no-nav { padding-bottom: 0 !important; }
         .view { display: none; height: 100%; animation: slideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
         .view.active { display: block; }
@@ -167,14 +168,14 @@
         .cat-card span { z-index: 1; font-size: 1.3rem; color: var(--text-main); }
         .cat-full { grid-column: span 2; padding: 28px 24px; }
 
-        /* Subtle tints for categories instead of heavy gradients */
-        .bg-morning { background: rgba(25, 118, 210, 0.1); border-color: rgba(25, 118, 210, 0.2); }
-        .bg-evening { background: rgba(81, 45, 168, 0.1); border-color: rgba(81, 45, 168, 0.2); }
-        .bg-sleep { background: rgba(194, 24, 91, 0.1); border-color: rgba(194, 24, 91, 0.2); }
-        .bg-wake { background: rgba(2, 136, 209, 0.1); border-color: rgba(2, 136, 209, 0.2); }
-        .bg-masjid { background: rgba(230, 74, 25, 0.1); border-color: rgba(230, 74, 25, 0.2); }
-        .bg-travel { background: rgba(175, 180, 43, 0.1); border-color: rgba(175, 180, 43, 0.2); }
-        .bg-quran { background: rgba(251, 192, 45, 0.1); border-color: rgba(251, 192, 45, 0.2); }
+        /* Vibrant tints for categories for light mode */
+        .bg-morning { background: rgba(25, 118, 210, 0.25); border-color: rgba(25, 118, 210, 0.4); }
+        .bg-evening { background: rgba(81, 45, 168, 0.25); border-color: rgba(81, 45, 168, 0.4); }
+        .bg-sleep { background: rgba(194, 24, 91, 0.25); border-color: rgba(194, 24, 91, 0.4); }
+        .bg-wake { background: rgba(2, 136, 209, 0.25); border-color: rgba(2, 136, 209, 0.4); }
+        .bg-masjid { background: rgba(230, 74, 25, 0.25); border-color: rgba(230, 74, 25, 0.4); }
+        .bg-travel { background: rgba(175, 180, 43, 0.25); border-color: rgba(175, 180, 43, 0.4); }
+        .bg-quran { background: rgba(251, 192, 45, 0.25); border-color: rgba(251, 192, 45, 0.4); }
 
         body[data-theme="dark"] .bg-morning, body[data-theme="dark"] .bg-evening, body[data-theme="dark"] .bg-sleep, body[data-theme="dark"] .bg-wake, body[data-theme="dark"] .bg-masjid, body[data-theme="dark"] .bg-travel, body[data-theme="dark"] .bg-quran { background: rgba(255,255,255,0.05); }
 
@@ -397,7 +398,7 @@
 
                 <div class="home-stats-card glass-panel" onclick="App.switchView('sunan', 'sunan')">
                     <div class="hsc-header">
-                        <div class="hsc-title">متابعة السنن <span style="font-size: 1rem; opacity:0.8;">›</span></div>
+                        <div class="hsc-title">العبادات <span style="font-size: 1rem; opacity:0.8;">›</span></div>
                         <div class="hsc-badge" id="hsc-badge">أحسنت! 🚀</div>
                     </div>
                     <div class="hsc-body">
@@ -472,7 +473,6 @@
                 </div>
             </div>
         </section>
-
 
         <section id="view-quran-page" class="view">
             <div style="display: flex; justify-content: space-between; padding: 12px 20px; background: var(--glass-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);">
@@ -618,9 +618,9 @@
 
     <nav class="bottom-nav" id="main-nav">
         <div class="nav-item active" data-tab="home"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> الرئيسية</div>
-        <div class="nav-item" data-tab="quran"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg> القرآن</div>
+        <div class="nav-item hidden-el" data-tab="quran"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg> القرآن</div>
         <div class="nav-item" data-tab="prayer"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/></svg> الصلاة</div>
-        <div class="nav-item" data-tab="sunan"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> السنن</div>
+        <div class="nav-item" data-tab="sunan"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> العبادات</div>
         <div class="nav-item" data-tab="settings"><svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 C10.14,21.83,10.33,22,10.57,22h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg> إعدادات</div>
     </nav>
 
@@ -830,10 +830,14 @@
                             let diff = startX - e.changedTouches[0].screenX;
                             if (Math.abs(diff) > 50) {
                                 if (area === DOM.readerContentArea) {
-                                    if (diff < 0) this.prevDhikr(); else this.nextDhikr();
-                                } else if (area === document.getElementById('sunan-tab-tracking')) {
+                                    // عكس منطق السحب حسب الطلب (يمين=السابق / يسار=التالي)
+                                    if (diff > 0) this.prevDhikr(); else this.nextDhikr();
+                                } 
+                                /* إيقاف السحب في قسم العبادات حسب الطلب
+                                else if (area === document.getElementById('sunan-tab-tracking')) {
                                     if (diff < 0) this.changeTrackingDate(-1); else this.changeTrackingDate(1);
                                 }
+                                */
                             } else if (Math.abs(diff) < 5 && area === DOM.readerContentArea) {
                                 this.processTap();
                             }
@@ -1098,7 +1102,8 @@
                     if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
 
-                const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'السنن والواجبات', settings: 'الإعدادات', misc: 'أذكار متنوعة' };
+                // تغيير مسمى السنن إلى العبادات
+                const titles = { home: 'الأذكار', quran: 'القرآن الكريم', prayer: 'مواقيت الصلاة', sunan: 'العبادات', settings: 'الإعدادات', misc: 'أذكار متنوعة' };
                 if (viewId !== 'quran-page') {
                     DOM.headerTitle.textContent = titles[viewId] || 'الأذكار';
                 }
@@ -1211,13 +1216,13 @@
                 let percent = Math.round((doneCount / SUNAN_LIST.length) * 100);
                 let dateLbl = State.trackingOffset === 0 ? 'اليوم' : State.trackingOffset === -1 ? 'أمس' : targetDateStr;
                 
-                const text = `متابعة السنن والواجبات (${dateLbl})\nنسبة الإنجاز: ${formatNumber(percent)}%\n\n${listStr}\n\nتطبيق الأذكار والسنن 🚀`;
-                this.executeShare('متابعة السنن', text);
+                const text = `متابعة العبادات (${dateLbl})\nنسبة الإنجاز: ${formatNumber(percent)}%\n\n${listStr}\n\nتطبيق الأذكار والسنن 🚀`;
+                this.executeShare('متابعة العبادات', text);
             },
             shareStats() {
                 const stats = this.calculateSunanStats();
-                const text = `الحمد لله، أطول سلسلة التزام بالسنن وصلت إلى ${formatNumber(stats.maxStreak)} أيام متتالية، والسنة الأكثر التزاماً هي: ${stats.topSunnah}. 🌟`;
-                this.executeShare('إحصائيات السنن', text);
+                const text = `الحمد لله، أطول سلسلة التزام بالعبادات وصلت إلى ${formatNumber(stats.maxStreak)} أيام متتالية، والعبادة الأكثر التزاماً هي: ${stats.topSunnah}. 🌟`;
+                this.executeShare('إحصائيات العبادات', text);
             },
             shareDhikr() {
                 const dhikr = State.currentList[State.currentIndex];
