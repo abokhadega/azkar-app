@@ -1164,11 +1164,13 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                // إخفاء الشريط السفلي فقط في شاشة قراءة صفحات القرآن
-                if (['quran-page'].includes(viewId)) {
-                    DOM.mainNav.classList.add('hidden-el'); DOM.appContent.classList.add('no-nav');
+                // إخفاء الشريط السفلي بالكامل أثناء عرض شاشة الذكر أو القراءة لحل مشكلة الفجوة والتداخل
+                if (['quran-page', 'reader', 'completion'].includes(viewId)) {
+                    DOM.mainNav.classList.add('hidden-el'); 
+                    DOM.appContent.classList.add('no-nav');
                 } else {
-                    DOM.mainNav.classList.remove('hidden-el'); DOM.appContent.classList.remove('no-nav');
+                    DOM.mainNav.classList.remove('hidden-el'); 
+                    DOM.appContent.classList.remove('no-nav');
                     if (!['reader', 'completion'].includes(viewId)) DOM.topProgressBar.classList.add('hidden-el');
                 }
 
@@ -1268,7 +1270,6 @@
                 if (State.currentIndex > 0) { State.currentIndex--; this.renderCurrentDhikr(); }
             },
 
-            // وظيفة المشاركة الخاصة بالتطبيق ككل
             shareApp() {
                 const text = `تطبيق الأذكار والعبادات 🌟\nأنصحك بتجربة هذا التطبيق لمتابعة أذكارك اليومية، صلواتك، وعباداتك بسهولة.\nتصفح أو حمّل التطبيق من هنا: \n${window.location.href}`;
                 if (navigator.share) {
