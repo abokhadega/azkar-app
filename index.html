@@ -119,14 +119,13 @@
         .progress-bar-container { flex: 1; height: 8px; background: var(--progress-bg); border-radius: 6px; position: relative; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--progress-fill); width: 0%; transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: absolute; right: 0; border-radius: 6px;}
 
-        /* إزالة البادنج الثابت من الحاوية الرئيسية لحل مشكلة فجوة صفحة القراءة */
         main { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; transition: padding 0.3s; }
         main.no-nav { padding-bottom: 0 !important; }
         .view { display: none; height: 100%; animation: slideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
         .view.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* إضافة بادنج سفلي مخصص للحاويات القابلة للتمرير فقط، لكي تتخطى الشريط السفلي العائم */
+        /* مساحة سفلية إضافية للحاويات حتى لا يغطي الشريط السفلي على آخر العناصر */
         .home-container { padding: 20px; padding-bottom: 130px; display: flex; flex-direction: column; gap: 16px; }
         .prayer-container { padding: 20px; padding-bottom: 130px; }
         .sunan-list { padding: 20px; padding-bottom: 130px; touch-action: pan-y; }
@@ -134,10 +133,9 @@
         .tips-container { padding: 20px; padding-bottom: 130px; }
         .settings-container { padding: 24px; padding-bottom: 130px; }
         
-        /* Updated Cards to Glass with Reduced Height */
         .quran-summary-card, .next-prayer-card, .home-stats-card {
             cursor: pointer; position: relative; overflow: hidden; transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            padding: 16px 20px; /* تم تقليل البادنج لتقليل الارتفاع */
+            padding: 16px 20px; 
         }
         .quran-summary-card:active, .next-prayer-card:active, .home-stats-card:active { transform: scale(0.96); }
         
@@ -145,12 +143,15 @@
         .next-prayer-card { border-left: 6px solid #34c759; }
         .home-stats-card { border-left: 6px solid var(--primary); }
 
-        .qsc-info, .npc-info { display: flex; flex-direction: column; gap: 4px; }
-        .qsc-title, .npc-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
+        .qsc-info { display: flex; flex-direction: column; gap: 4px; }
+        .qsc-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
         .qsc-details { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
-        .npc-name { font-size: 1.4rem; font-weight: 800; color: var(--text-main); display: flex; align-items: baseline; gap: 8px; }
-        .npc-time { font-size: 1rem; font-weight: 600; color: var(--primary); }
-        .npc-timer { font-size: 1.8rem; font-weight: 800; direction: ltr; text-align: right; letter-spacing: 2px; color: var(--text-main); }
+        
+        /* تنسيق الصلاة الفائتة والقادمة */
+        .npc-title { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); }
+        .npc-name { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-top: 4px; }
+        .npc-time { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-top: 4px; opacity: 0.9;}
+        .npc-timer { font-size: 1.35rem; font-weight: 800; direction: ltr; margin-top: 6px; letter-spacing: 1px;}
         
         .hsc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .hsc-title { font-weight: 800; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
@@ -174,7 +175,6 @@
         .cat-card span { z-index: 1; font-size: 1.3rem; color: var(--text-main); }
         .cat-full { grid-column: span 2; padding: 28px 24px; }
 
-        /* Vibrant tints for categories for light mode */
         .bg-morning { background: rgba(25, 118, 210, 0.25); border-color: rgba(25, 118, 210, 0.4); }
         .bg-evening { background: rgba(81, 45, 168, 0.25); border-color: rgba(81, 45, 168, 0.4); }
         .bg-sleep { background: rgba(194, 24, 91, 0.25); border-color: rgba(194, 24, 91, 0.4); }
@@ -210,6 +210,7 @@
         /* Quran Section Styles */
         #view-quran { display: none; flex-direction: column; height: 100%; }
         #view-quran.active { display: flex; }
+        
         .quran-sub-nav { display: flex; background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 20; }
         .qt-tab { flex: 1; text-align: center; padding: 16px 0; font-weight: 800; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
         .qt-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
@@ -241,22 +242,40 @@
         #view-quran-page { display: none; flex-direction: column; background: var(--bg-gradient); }
         #view-quran-page.active { display: flex; }
 
-        /* Sunan Styles (العبادات) */
-        #view-sunan { display: none; flex-direction: column; height: 100%; }
-        #view-sunan.active { display: flex; }
-        .sunan-sub-nav { display: flex; background: var(--glass-bg); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 20; }
+        /* Sunan Styles (العبادات) - تم إعادة ضبطه ليصبح التمرير منسجماً مع المتصفح */
+        #view-sunan { display: none; }
+        #view-sunan.active { display: block; }
+        
+        .sunan-sub-nav { display: flex; background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); }
         .ss-tab { flex: 1; text-align: center; padding: 16px 0; font-weight: 800; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
         .ss-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-        .sunan-tab-content { display: none; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        .sunan-tab-content { display: none; }
         .sunan-tab-content.active { display: block; animation: slideIn 0.3s forwards; }
 
-        .date-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: rgba(0, 122, 255, 0.1); color: var(--primary); font-weight: 800; backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border);}
-        .date-nav-btn { background: none; border: none; color: inherit; font-size: 1.8rem; cursor: pointer; padding: 0 14px; font-weight: bold; transition: transform 0.2s;}
-        .date-nav-btn:active { transform: scale(0.8); }
-        .date-text { font-size: 1.2rem; }
-        .share-stat-btn { background: none; border: none; color: inherit; cursor: pointer; padding: 8px; display: flex; align-items: center; }
+        /* حاوية التثبيت الجديدة التي تجمع اليوم مع الإحصائيات معاً لتثبت بالأعلى عند السحب */
+        .sticky-tracking-header {
+            position: sticky; top: 0; z-index: 30;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 16px; margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .date-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; color: var(--primary); font-weight: 800; }
         
-        .sunan-sticky-stats { display: flex; gap: 16px; padding: 16px 20px; background: transparent; position: sticky; top: 0; z-index: 10; }
+        .nav-square-btn {
+            width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.3); color: var(--primary);
+            display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        body[data-theme="dark"] .nav-square-btn { background: rgba(0, 0, 0, 0.3); }
+        .nav-square-btn:active { transform: scale(0.85); background: rgba(0, 122, 255, 0.2); border-color: var(--primary); }
+        .nav-square-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .date-text { font-size: 1.2rem; }
+        
+        .sunan-sticky-stats { display: flex; gap: 16px; padding: 0 20px; }
         .stat-card { flex: 1; padding: 14px; text-align: center; display: flex; justify-content: space-between; align-items: center; }
         .stat-title { font-size: 1rem; color: var(--text-muted); font-weight: 800; }
         .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--primary); direction: ltr; }
@@ -295,7 +314,7 @@
         .tip-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-main); text-align: justify; font-weight: 600;}
 
         /* Reader Styles */
-        #view-reader { display: none; flex-direction: column; background: transparent; }
+        #view-reader { display: none; flex-direction: column; background: transparent; height: 100%;}
         #view-reader.active { display: flex; }
         .reader-content { flex: 1; min-height: 0; padding: 30px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; cursor: pointer; user-select: none; touch-action: pan-y; }
         .dhikr-text { font-size: var(--dhikr-font-size); transition: font-size 0.2s ease; line-height: 2.2; font-weight: 700; margin-bottom: 30px; text-align: justify; text-align-last: center; text-shadow: 0 2px 10px rgba(0,0,0,0.05);}
@@ -322,7 +341,7 @@
         .btn-set.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); font-size: 1.2rem;}
         .font-preview { border-top: 1px dashed var(--glass-border); margin-top: 20px; padding-top: 20px; text-align: center; }
 
-        #view-completion { display: none; flex-direction: column; background: transparent; }
+        #view-completion { display: none; flex-direction: column; background: transparent; height: 100%;}
         #view-completion.active { display: flex; }
         .completion-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
         .check-icon-wrapper { width: 100px; height: 100px; background: rgba(251, 192, 45, 0.2); border: 2px solid #FBC02D; backdrop-filter: blur(10px); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(251, 192, 45, 0.3); animation: pop 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -386,15 +405,32 @@
                     </div>
                 </div>
 
+                <!-- كارت الصلاة المدمج (الفائتة والقادمة) -->
                 <div class="next-prayer-card glass-panel" id="home-next-prayer" onclick="App.switchView('prayer', 'prayer')">
-                    <div class="npc-info">
-                        <span class="npc-title">الصلاة القادمة</span>
-                        <div style="display:flex; align-items:baseline; gap: 8px;">
-                            <span class="npc-name" id="np-name">--</span>
-                            <span class="npc-time" id="np-time">--:--</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <!-- الصلاة الفائتة (اليمين) -->
+                        <div style="display: flex; flex-direction: column; flex: 1; align-items: flex-start;">
+                            <span class="npc-title">الصلاة الفائتة</span>
+                            <div style="display: flex; align-items: baseline; gap: 6px;">
+                                <span class="npc-name" id="pp-name" style="margin: 0;">--</span>
+                                <span class="npc-time" id="pp-time" style="margin: 0;">--:--</span>
+                            </div>
+                            <div class="npc-timer" id="pp-timer" style="color: var(--text-muted); font-weight: 700;">--:--:--</div>
+                        </div>
+                        
+                        <!-- فاصل رأسي شفاف -->
+                        <div style="width: 1px; height: 50px; background: var(--border); margin: 0 16px;"></div>
+                        
+                        <!-- الصلاة القادمة (اليسار) -->
+                        <div style="display: flex; flex-direction: column; flex: 1; align-items: flex-end;">
+                            <span class="npc-title">الصلاة القادمة</span>
+                            <div style="display: flex; align-items: baseline; gap: 6px; flex-direction: row-reverse;">
+                                <span class="npc-name" id="np-name" style="margin: 0;">--</span>
+                                <span class="npc-time" id="np-time" style="margin: 0;">--:--</span>
+                            </div>
+                            <div class="npc-timer" id="np-timer" style="color: var(--primary);">--:--:--</div>
                         </div>
                     </div>
-                    <div class="npc-timer" id="np-timer">--:--:--</div>
                 </div>
 
                 <div class="home-stats-card glass-panel" onclick="App.switchView('sunan', 'sunan')">
@@ -509,6 +545,7 @@
         </section>
 
         <section id="view-sunan" class="view">
+            <!-- شريط الأقسام (المتابعة - إحصائيات - نصائح) لم يعد ثابتاً وسيختفي عند التمرير -->
             <div class="sunan-sub-nav">
                 <div class="ss-tab active" data-stab="tracking">المتابعة</div>
                 <div class="ss-tab" data-stab="stats">إحصائيات</div>
@@ -516,21 +553,37 @@
             </div>
 
             <div class="sunan-tab-content active" id="sunan-tab-tracking" style="touch-action: pan-y;">
-                <div class="date-header">
-                    <button class="date-nav-btn" onclick="App.changeTrackingDate(1)">›</button>
-                    <span class="date-text" id="tracking-date-label">اليوم</span>
-                    <div style="display:flex; align-items:center;">
-                        <button class="date-nav-btn" onclick="App.changeTrackingDate(-1)">‹</button>
-                        <button class="share-stat-btn" onclick="App.shareTracking()" title="مشاركة">
-                            <svg style="width:24px; height:24px; fill:currentColor;" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                <!-- شريط مثبت للعبادات: يضم (التاريخ + أزرار التنقل) مع الإحصائيات معاً -->
+                <div class="sticky-tracking-header">
+                    <div class="date-header">
+                        <!-- زر المشاركة في مربع منفصل على اليسار -->
+                        <button class="nav-square-btn share-stat-btn" onclick="App.shareTracking()" title="مشاركة">
+                            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
+                        
+                        <!-- النص بالمنتصف -->
+                        <span class="date-text" id="tracking-date-label" style="flex:1; text-align:center;">اليوم</span>
+                        
+                        <!-- زراير السابق والتالي متجاورة وعكسنا منطقها -->
+                        <div style="display:flex; gap: 8px; align-items: center;">
+                            <!-- زر اليوم التالي (+) يسار الأيقونات -->
+                            <button class="nav-square-btn" onclick="App.changeTrackingDate(1)" title="التالي">
+                                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                            </button>
+                            <!-- زر اليوم السابق (-) يمين الأيقونات -->
+                            <button class="nav-square-btn" onclick="App.changeTrackingDate(-1)" title="السابق">
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- إحصائيات الإنجاز والمتوسط (مثبتة مع شريط التاريخ) -->
+                    <div class="sunan-sticky-stats">
+                        <div class="stat-card glass-panel"><span class="stat-title">الإنجاز</span><span class="stat-value" id="sunan-today-percent">0%</span></div>
+                        <div class="stat-card glass-panel"><span class="stat-title">المتوسط</span><span class="stat-value" id="sunan-avg-percent">0%</span></div>
                     </div>
                 </div>
 
-                <div class="sunan-sticky-stats">
-                    <div class="stat-card glass-panel"><span class="stat-title">الإنجاز</span><span class="stat-value" id="sunan-today-percent">0%</span></div>
-                    <div class="stat-card glass-panel"><span class="stat-title">المتوسط</span><span class="stat-value" id="sunan-avg-percent">0%</span></div>
-                </div>
                 <div class="sunan-list" id="sunan-list-container"></div>
             </div>
 
@@ -801,45 +854,27 @@
             },
 
             bindSwipeAndPinch() {
-                let startX = 0, initialPinchDist = null, initialFont = null;
-                // تم إزالة مستمع السحب من قسم العبادات بناءً على طلبك
-                const areas = [DOM.readerContentArea];
+                let startX = 0;
+                const area = DOM.readerContentArea;
 
-                areas.forEach(area => {
-                    if (!area) return;
+                if (area) {
                     area.addEventListener('touchstart', (e) => {
-                        if (e.touches.length === 2 && area === DOM.readerContentArea) {
-                            initialPinchDist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                            initialFont = Config.fontSize;
-                        } else if (e.touches.length === 1) {
+                        if (e.touches.length === 1) {
                             startX = e.touches[0].screenX;
                         }
-                    }, {passive: false});
-
-                    area.addEventListener('touchmove', (e) => {
-                        if (e.touches.length === 2 && initialPinchDist && area === DOM.readerContentArea) {
-                            e.preventDefault(); 
-                            const currentDist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                            Config.fontSize = Math.max(1.0, Math.min(initialFont * (currentDist / initialPinchDist), 3.0));
-                            this.applySettings();
-                        }
-                    }, {passive: false});
+                    }, {passive: true});
 
                     area.addEventListener('touchend', (e) => {
-                        if (e.touches.length < 2) initialPinchDist = null;
-                        if (e.changedTouches.length === 1 && !initialPinchDist) {
+                        if (e.changedTouches.length === 1) {
                             let diff = startX - e.changedTouches[0].screenX;
                             if (Math.abs(diff) > 50) {
-                                if (area === DOM.readerContentArea) {
-                                    // عكس منطق السحب (السحب من اليمين -> السابق، من اليسار -> التالي)
-                                    if (diff > 0) this.nextDhikr(); else this.prevDhikr();
-                                }
-                            } else if (Math.abs(diff) < 5 && area === DOM.readerContentArea) {
+                                if (diff > 0) this.prevDhikr(); else this.nextDhikr();
+                            } else if (Math.abs(diff) < 5) {
                                 this.processTap();
                             }
                         }
                     });
-                });
+                }
             },
 
             applySettings() { 
@@ -1050,36 +1085,66 @@
                 const reqKeys = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
                 const arNames = { Fajr: 'الفجر', Dhuhr: 'الظهر', Asr: 'العصر', Maghrib: 'المغرب', Isha: 'العشاء' };
                 
-                let nextPrayerKey = null;
-                let nextPrayerDate = null;
+                let nextKey = null;
+                let prevKey = null;
+                let nextDate = null;
+                let prevDate = null;
 
-                for(let key of reqKeys) {
+                for(let i=0; i<reqKeys.length; i++) {
+                    let key = reqKeys[i];
                     let [h, m] = timings[key].split(':');
                     let pDate = new Date();
                     pDate.setHours(h, m, 0, 0);
-                    if(pDate > now) { nextPrayerKey = key; nextPrayerDate = pDate; break; }
+                    if(pDate > now) { 
+                        nextKey = key; 
+                        nextDate = pDate; 
+                        prevKey = reqKeys[i > 0 ? i - 1 : reqKeys.length - 1];
+                        break; 
+                    }
                 }
 
-                if(!nextPrayerKey) {
-                    nextPrayerKey = 'Fajr';
+                if(!nextKey) {
+                    nextKey = 'Fajr';
+                    prevKey = 'Isha';
                     let [h, m] = timings['Fajr'].split(':');
-                    nextPrayerDate = new Date();
-                    nextPrayerDate.setDate(nextPrayerDate.getDate() + 1);
-                    nextPrayerDate.setHours(h, m, 0, 0);
+                    nextDate = new Date();
+                    nextDate.setDate(nextDate.getDate() + 1);
+                    nextDate.setHours(h, m, 0, 0);
                 }
 
-                let diff = nextPrayerDate - now;
-                let h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                let m = Math.floor((diff / 1000 / 60) % 60);
-                let s = Math.floor((diff / 1000) % 60);
+                let [prevH, prevM] = timings[prevKey].split(':');
+                prevDate = new Date();
+                prevDate.setHours(prevH, prevM, 0, 0);
+                if (prevDate > now) {
+                    prevDate.setDate(prevDate.getDate() - 1);
+                }
 
-                let [ptH, ptM] = timings[nextPrayerKey].split(':');
-                let displayPtH = parseInt(ptH) % 12 || 12;
-                let ampm = parseInt(ptH) >= 12 ? 'م' : 'ص';
+                let diffNext = nextDate - now;
+                let nh = Math.floor((diffNext / (1000 * 60 * 60)) % 24);
+                let nm = Math.floor((diffNext / 1000 / 60) % 60);
+                let ns = Math.floor((diffNext / 1000) % 60);
+
+                let diffPrev = now - prevDate;
+                let ph = Math.floor((diffPrev / (1000 * 60 * 60)) % 24);
+                let pm = Math.floor((diffPrev / 1000 / 60) % 60);
+                let ps = Math.floor((diffPrev / 1000) % 60);
+
+                let displayNextH = parseInt(timings[nextKey].split(':')[0]) % 12 || 12;
+                let nextAmpm = parseInt(timings[nextKey].split(':')[0]) >= 12 ? 'م' : 'ص';
                 
-                document.getElementById('np-name').textContent = arNames[nextPrayerKey];
-                document.getElementById('np-time').textContent = `${formatNumber(displayPtH)}:${formatNumber(ptM)} ${ampm}`;
-                document.getElementById('np-timer').textContent = `${formatNumber(String(h).padStart(2,'0'))}:${formatNumber(String(m).padStart(2,'0'))}:${formatNumber(String(s).padStart(2,'0'))}`;
+                let displayPrevH = parseInt(timings[prevKey].split(':')[0]) % 12 || 12;
+                let prevAmpm = parseInt(timings[prevKey].split(':')[0]) >= 12 ? 'م' : 'ص';
+
+                let ppNameEl = document.getElementById('pp-name');
+                if(ppNameEl) {
+                    ppNameEl.textContent = arNames[prevKey];
+                    document.getElementById('pp-time').textContent = `${formatNumber(displayPrevH)}:${formatNumber(timings[prevKey].split(':')[1])} ${prevAmpm}`;
+                    document.getElementById('pp-timer').textContent = `+${formatNumber(String(ph).padStart(2,'0'))}:${formatNumber(String(pm).padStart(2,'0'))}:${formatNumber(String(ps).padStart(2,'0'))}`;
+
+                    document.getElementById('np-name').textContent = arNames[nextKey];
+                    document.getElementById('np-time').textContent = `${formatNumber(displayNextH)}:${formatNumber(timings[nextKey].split(':')[1])} ${nextAmpm}`;
+                    document.getElementById('np-timer').textContent = `-${formatNumber(String(nh).padStart(2,'0'))}:${formatNumber(String(nm).padStart(2,'0'))}:${formatNumber(String(ns).padStart(2,'0'))}`;
+                }
             },
 
             switchView(viewId, activeTabId = null) {
@@ -1091,7 +1156,6 @@
                 const targetNav = document.querySelector(`.nav-item[data-tab="${activeTabId || viewId}"]`);
                 if(targetNav) targetNav.classList.add('active');
 
-                // إخفاء الشريط السفلي بالكامل أثناء عرض شاشة الذكر أو القراءة لحل مشكلة الفجوة والتداخل
                 if (['quran-page', 'reader', 'completion'].includes(viewId)) {
                     DOM.mainNav.classList.add('hidden-el'); 
                     DOM.appContent.classList.add('no-nav');
