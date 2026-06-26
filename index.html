@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>أذكار وسنن</title>
     <meta name="theme-color" content="#e0c3fc">
     <link rel="manifest" href="manifest.json">
@@ -124,7 +128,6 @@
         .view.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* مساحة سفلية إضافية للحاويات حتى لا يغطي الشريط السفلي على آخر العناصر */
         .home-container { padding: 20px; padding-bottom: 130px; display: flex; flex-direction: column; gap: 16px; }
         .prayer-container { padding: 20px; padding-bottom: 130px; }
         .sunan-list { padding: 20px; padding-bottom: 130px; touch-action: pan-y; }
@@ -146,7 +149,6 @@
         .qsc-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
         .qsc-details { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
         
-        /* تنسيق الصلاة الفائتة والقادمة */
         .npc-title { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); }
         .npc-name { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-top: 4px; }
         .npc-time { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-top: 4px; opacity: 0.9;}
@@ -185,12 +187,22 @@
         body[data-theme="dark"] .bg-morning, body[data-theme="dark"] .bg-evening, body[data-theme="dark"] .bg-sleep, body[data-theme="dark"] .bg-wake, body[data-theme="dark"] .bg-masjid, body[data-theme="dark"] .bg-travel, body[data-theme="dark"] .bg-quran { background: rgba(255,255,255,0.05); }
 
         .location-form { padding: 20px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
-        .form-row { display: flex; gap: 12px; }
+        .form-row { display: flex; gap: 12px; width: 100%; }
+        
         .form-select, .form-input { 
-            flex: 1; padding: 14px; border: 1px solid var(--glass-border); border-radius: 14px; 
-            font-family: inherit; font-size: 1.1rem; font-weight: 600;
-            background: rgba(255,255,255,0.2); color: var(--text-main); outline: none; 
+            flex: 1; 
+            padding: 14px; 
+            border: 1px solid var(--glass-border); 
+            border-radius: 14px; 
+            font-family: inherit; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            background: rgba(255,255,255,0.2); 
+            color: var(--text-main); 
+            outline: none; 
             backdrop-filter: blur(10px);
+            min-width: 0;  
+            width: 100%;
         }
         body[data-theme="dark"] .form-select, body[data-theme="dark"] .form-input { background: rgba(0,0,0,0.2); }
         
@@ -252,7 +264,6 @@
         .sunan-tab-content { display: none; }
         .sunan-tab-content.active { display: block; animation: slideIn 0.3s forwards; }
 
-        /* حاوية التثبيت الجديدة التي تجمع اليوم مع الإحصائيات معاً لتثبت بالأعلى عند السحب */
         .sticky-tracking-header {
             position: sticky; top: 0; z-index: 30;
             background: var(--glass-bg);
@@ -1214,7 +1225,9 @@
                 const total = State.currentList.length;
                 const current = State.currentIndex + 1;
                 const dhikr = State.currentList[State.currentIndex];
-                State.currentCount = 0;
+                
+                // التعديل هنا: العداد يبدأ من العدد الكلي للذكر بدلاً من الصفر لينزل متناقصاً
+                State.currentCount = dhikr.count;
 
                 DOM.topProgressBar.classList.remove('hidden-el');
                 DOM.readerCounter.textContent = `${formatNumber(total)} | ${formatNumber(current)}`;
@@ -1240,12 +1253,12 @@
             },
 
             processTap() {
-                const originalCount = State.currentList[State.currentIndex].count;
-                if (State.currentCount < originalCount) {
-                    State.currentCount++;
+                // التعديل هنا: العداد يتناقص في كل ضغطة وينتقل للتالي عندما يصل للصفر
+                if (State.currentCount > 0) {
+                    State.currentCount--;
                     this.updateFooterCount();
                     if (navigator.vibrate) navigator.vibrate(40);
-                    if (State.currentCount === originalCount) setTimeout(() => this.nextDhikr(), 250); 
+                    if (State.currentCount === 0) setTimeout(() => this.nextDhikr(), 250); 
                 }
             },
 
@@ -1490,7 +1503,22 @@
         document.addEventListener('DOMContentLoaded', () => App.init());
         
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed'));
+            navigator.serviceWorker.register('sw.js').then(reg => {
+                // إجبار المتصفح على التحقق من وجود تحديث لملف sw.js
+                reg.update();
+                reg.onupdatefound = () => {
+                    const installingWorker = reg.installing;
+                    installingWorker.onstatechange = () => {
+                        if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // تنظيف الكاش القديم وإعادة تحميل الصفحة لتطبيق التحديث فوراً
+                            caches.keys().then(names => {
+                                for (let name of names) caches.delete(name);
+                            });
+                            window.location.reload(true);
+                        }
+                    };
+                };
+            }).catch(err => console.log('SW registration failed', err));
         }
     </script>
 </body>
